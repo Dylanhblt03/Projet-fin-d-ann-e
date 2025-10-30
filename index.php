@@ -1,5 +1,4 @@
 <?php
-// Bonjour Dylan :)
 // 1. Inclure le fichier de connexion à la base de données.
 include 'includes/db.inc.php';
 
