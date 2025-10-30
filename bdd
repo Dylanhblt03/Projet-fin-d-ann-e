@@ -1,0 +1,113 @@
+-- Créer la base de données
+CREATE DATABASE IF NOT EXISTS Oleris_db CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
+USE Oleris_db;
+
+-- Table des contacts / demandes de rendez-vous
+CREATE TABLE IF NOT EXISTS contacts (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) NOT NULL,
+    telephone VARCHAR(20) NOT NULL,
+    service VARCHAR(50) NOT NULL,
+    message TEXT NOT NULL,
+    statut ENUM('nouveau', 'en_cours', 'traite', 'archive') DEFAULT 'nouveau',
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    date_modification DATETIME DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    INDEX idx_email (email),
+    INDEX idx_statut (statut),
+    INDEX idx_date (date_creation)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table des rendez-vous (calendrier)
+CREATE TABLE IF NOT EXISTS rendez_vous (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    contact_id INT,
+    titre VARCHAR(200) NOT NULL,
+    description TEXT,
+    date_rdv DATE NOT NULL,
+    heure_debut TIME NOT NULL,
+    heure_fin TIME NOT NULL,
+    statut ENUM('planifie', 'confirme', 'annule', 'termine') DEFAULT 'planifie',
+    rappel_envoye BOOLEAN DEFAULT FALSE,
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (contact_id) REFERENCES contacts(id) ON DELETE SET NULL,
+    INDEX idx_date_rdv (date_rdv),
+    INDEX idx_statut (statut)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table des utilisateurs admin
+CREATE TABLE IF NOT EXISTS utilisateurs (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(100) NOT NULL,
+    email VARCHAR(150) UNIQUE NOT NULL,
+    mot_de_passe VARCHAR(255) NOT NULL,
+    role ENUM('admin', 'moderateur') DEFAULT 'admin',
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    derniere_connexion DATETIME,
+    actif BOOLEAN DEFAULT TRUE,
+    INDEX idx_email (email)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table des services proposés
+CREATE TABLE IF NOT EXISTS services (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nom VARCHAR(150) NOT NULL,
+    description TEXT,
+    icone VARCHAR(50),
+    prix_min DECIMAL(10,2),
+    prix_max DECIMAL(10,2),
+    duree_estimee VARCHAR(50),
+    actif BOOLEAN DEFAULT TRUE,
+    ordre_affichage INT DEFAULT 0,
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table du portfolio
+CREATE TABLE IF NOT EXISTS portfolio (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titre VARCHAR(200) NOT NULL,
+    description TEXT,
+    categorie ENUM('site_web', 'design', 'photo', 'app_mobile', 'autre') NOT NULL,
+    image_url VARCHAR(255),
+    url_projet VARCHAR(255),
+    client VARCHAR(100),
+    date_realisation DATE,
+    technologies TEXT,
+    visible BOOLEAN DEFAULT TRUE,
+    ordre_affichage INT DEFAULT 0,
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_categorie (categorie),
+    INDEX idx_visible (visible)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table pour l'historique du chatbot
+CREATE TABLE IF NOT EXISTS chatbot_conversations (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    session_id VARCHAR(100) NOT NULL,
+    user_ip VARCHAR(50),
+    message_user TEXT NOT NULL,
+    message_bot TEXT NOT NULL,
+    intent VARCHAR(100),
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP,
+    INDEX idx_session (session_id),
+    INDEX idx_date (date_creation)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table des disponibilités (pour le calendrier)
+CREATE TABLE IF NOT EXISTS disponibilites (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    jour_semaine ENUM('lundi', 'mardi', 'mercredi', 'jeudi', 'vendredi', 'samedi', 'dimanche') NOT NULL,
+    heure_debut TIME NOT NULL,
+    heure_fin TIME NOT NULL,
+    actif BOOLEAN DEFAULT TRUE,
+    INDEX idx_jour (jour_semaine)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
+-- Table des jours fériés / congés
+CREATE TABLE IF NOT EXISTS jours_fermes (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    date_fermeture DATE NOT NULL UNIQUE,
+    raison VARCHAR(200),
+    date_creation DATETIME DEFAULT CURRENT_TIMESTAMP
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+
