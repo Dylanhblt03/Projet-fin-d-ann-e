@@ -38,13 +38,13 @@
                         <a class="nav-link" href="/service.php">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="#portfolio">Portfolio</a>
+                        <a class="nav-link" href="/portfolio.php">Portfolio</a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="/contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="/login.php">Connexion</a>
+                        <a class="nav-link" href="/login.php">Profil</a>
                     </li>
                     <li class="nav-item">
                         <a class="navbar-brand logo-text" href="/prendrerdv.php">

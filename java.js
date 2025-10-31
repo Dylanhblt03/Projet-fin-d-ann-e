@@ -110,7 +110,7 @@ $(document).on("keydown", function (e) {
     const statsSection = document.querySelector('.stats-section');
     if (statsSection) {
         const counters = document.querySelectorAll('.counter');
-        const speed = 200; // Vitesse de l'animation
+        const speed = 2000; // Vitesse de l'animation
 
         // Fonction récursive pour animer les compteurs.
         const animateCounters = () => {
@@ -122,7 +122,7 @@ $(document).on("keydown", function (e) {
 
                 if (count < target) {
                     counter.innerText = Math.ceil(count + increment); // Met à jour le texte avec la nouvelle valeur.
-                    setTimeout(animateCounters, 10); // Rappelle la fonction pour continuer l'animation.
+                    setTimeout(animateCounters, 30); // Rappelle la fonction pour continuer l'animation.
                 } else {
                     // Une fois la cible atteinte, formate le texte final.
                     if (counter.getAttribute('data-target') === '100') {

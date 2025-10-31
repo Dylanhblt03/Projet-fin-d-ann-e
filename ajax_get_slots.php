@@ -25,9 +25,9 @@ try {
     // Prépare une requête pour sélectionner uniquement l'heure (au format HH:MM) des rendez-vous
     // pour la date spécifiée, en excluant les rendez-vous annulés.
     $stmt = $pdo->prepare("
-        SELECT TIME_FORMAT(date_heure, '%H:%i') as slot
+        SELECT TIME_FORMAT(heure_debut, '%H:%i') as slot
         FROM rendez_vous
-        WHERE DATE(date_heure) = :date AND statut != 'annule'
+        WHERE date_rdv = :date AND statut NOT IN ('annule', 'termine')
     ");
 
     $stmt->execute([':date' => $date]);

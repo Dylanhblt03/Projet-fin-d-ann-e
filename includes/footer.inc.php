@@ -23,8 +23,6 @@
                     <div class="col-md-4 mb-4">
                         <h4 class="footer-title">Me Suivre</h4>
                         <div class="social-links">
-                            <a href="#" target="_blank"><i class="fab fa-facebook-f"></i></a>
-                            <a href="#" target="_blank"><i class="fab fa-twitter"></i></a>
                             <a href="https://www.linkedin.com/in/humblot-dylan-49835b341/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
                             <a href="https://github.com/Dylanhblt03" target="_blank"><i class="fab fa-github"></i></a>
                             <a href="https://www.instagram.com/nuagedencre/?igsh=MXViOTA2N3A3amFudg%3D%3D#" target="_blank"><i class="fab fa-instagram"></i></a>

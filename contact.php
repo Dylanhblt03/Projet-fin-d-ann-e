@@ -9,6 +9,17 @@ $services = $stmt->fetchAll();
 
 // 3. Inclure l'en-tête de la page.
 include 'includes/header.inc.php';
+
+// 4. Pré-remplissage du formulaire si les données viennent de l'estimateur
+$service_preselect = $_GET['service'] ?? '';
+$message_preselect = '';
+if (isset($_GET['source']) && $_GET['source'] === 'estimation') {
+    $services_estimes = $_GET['services'] ?? '';
+    $fourchette_prix = $_GET['estimation'] ?? '';
+    $message_preselect = "Bonjour,\n\nSuite à une estimation sur votre site, je serais intéressé(e) par un devis formel pour les services suivants :\n- " . str_replace(',', "\n- ", $services_estimes) . "\n\nL'estimation était de : " . $fourchette_prix . "\n\nMerci de revenir vers moi.\n\nCordialement,";
+}
+
+
 ?>
     <main>
 
@@ -74,7 +85,7 @@ include 'includes/header.inc.php';
                                     <div class="col-md-6 mb-3">
                                         <label class="form-label">Type de service</label>
                                         <select name="service" class="form-select" required id="serviceSelect">
-                                            <!-- Boucle pour générer les options du menu déroulant à partir de la BDD -->
+                                            <!-- Boucle pour générer les options du menu déroulant -->
                                             <option value="">Sélectionnez un service</option>
                                             <?php foreach ($services as $service): ?>
                                                 <option value="<?php echo htmlspecialchars($service['nom']); ?>">
@@ -86,7 +97,7 @@ include 'includes/header.inc.php';
                                 </div>
                                 <div class="mb-4">
                                     <label class="form-label">Décrivez votre projet</label>
-                                    <textarea name="message" class="form-control" rows="5" placeholder="Parlez-moi de votre projet..." required></textarea>
+                                    <textarea name="message" class="form-control" rows="8" placeholder="Parlez-moi de votre projet..." required><?php echo htmlspecialchars($message_preselect); ?></textarea>
                                 </div>
                                 <div class="text-center">
                                     <button type="submit" class="btn btn-gold btn-lg">Envoyer la demande</button>

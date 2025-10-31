@@ -1,6 +1,9 @@
 <?php
 
 // ===============================================
+// DÉMARRAGE DE SESSION
+session_start();
+// ===============================================
 // 1. CONFIGURATION ET CONNEXION À LA BASE DE DONNÉES
 // ===============================================
 
@@ -36,14 +39,14 @@ try {
     // Sélectionner les jours (sans l'heure) pour le mois en cours où le statut n'est pas 'annulé'
     // et compter le nombre de rendez-vous pour chaque jour.
     $stmt = $pdo->prepare("
-        SELECT DATE(date_heure) as reserved_day, COUNT(id) as total_rdv
+        SELECT date_rdv as reserved_day, COUNT(id) as total_rdv
         FROM rendez_vous
-        WHERE date_heure >= :start_month AND date_heure < :end_month AND statut != 'annule'
+        WHERE date_rdv >= :start_month AND date_rdv < :end_month AND statut NOT IN ('annule', 'termine')
         GROUP BY reserved_day
     ");
 
-    $start_month = $current_date->format('Y-m-01 00:00:00');
-    $end_month = (clone $current_date)->modify('+1 month')->format('Y-m-01 00:00:00');
+    $start_month = $current_date->format('Y-m-01');
+    $end_month = (clone $current_date)->modify('+1 month')->format('Y-m-01');
 
     $stmt->execute([':start_month' => $start_month, ':end_month' => $end_month]);
     $results = $stmt->fetchAll();
@@ -201,14 +204,18 @@ include 'includes/header.inc.php';
                                     <input type="hidden" name="date_selectionnee" id="dateInput" required>
                                     <input type="hidden" name="creneau_selectionne" id="creneauInput" required>
 
-                                    <div class="mb-3">
-                                        <label for="rdvNom" class="form-label">Nom complet</label>
-                                        <input type="text" class="form-control" id="rdvNom" name="nom" required>
-                                    </div>
-                                    <div class="mb-3">
-                                        <label for="rdvEmail" class="form-label">Email</label>
-                                        <input type="email" class="form-control" id="rdvEmail" name="email" required>
-                                    </div>
+                                    <?php if (!isset($_SESSION['user_id'])): // Affiche ces champs uniquement si l'utilisateur n'est pas connecté ?>
+                                        <div class="mb-3">
+                                            <label for="rdvNom" class="form-label">Nom complet</label>
+                                            <input type="text" class="form-control" id="rdvNom" name="nom" required>
+                                        </div>
+                                        <div class="mb-3">
+                                            <label for="rdvEmail" class="form-label">Email</label>
+                                            <input type="email" class="form-control" id="rdvEmail" name="email" required>
+                                        </div>
+                                    <?php else: ?>
+                                        <p class="text-center">Vous réservez en tant que <strong><?php echo htmlspecialchars($_SESSION['user_name']); ?></strong>.</p>
+                                    <?php endif; ?>
                                     <div class="mb-3">
                                         <label for="rdvService" class="form-label">Service concerné</label>
                                         <select class="form-select" id="rdvService" name="service_concerne" required>
