@@ -36,7 +36,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_portfolio'])) {
 
         // Validation du fichier
         if (in_array($file_ext, $allowed_ext)) {
-            if ($_FILES['portfolio_media']['size'] < 50000000) { // 50MB max
+            if ($_FILES['portfolio_media']['size'] < 10737418240) { // 10GB max
                 // Crée un nom de fichier unique pour éviter les conflits
                 $new_file_name = uniqid('', true) . '.' . $file_ext;
                 $destination = $upload_dir . $new_file_name;
@@ -47,21 +47,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['add_portfolio'])) {
                     $message = '<div class="alert alert-danger">Erreur lors du déplacement du fichier.</div>';
                 }
             } else {
-                $message = '<div class="alert alert-danger">Le fichier est trop volumineux (50MB maximum).</div>';
+                $message = '<div class="alert alert-danger">Le fichier est trop volumineux (10GB maximum).</div>';
             }
         } else {
             $message = '<div class="alert alert-danger">Type de fichier non autorisé. (jpg, png, webp, mp4, webm)</div>';
         }
-    } else {
-        $message = '<div class="alert alert-danger">Veuillez sélectionner une image ou une vidéo.</div>';
+    } else if (isset($_FILES['portfolio_media'])) {
+        // Gestion des erreurs d'upload plus précises
+        switch ($_FILES['portfolio_media']['error']) {
+            case UPLOAD_ERR_INI_SIZE:
+            case UPLOAD_ERR_FORM_SIZE:
+                $message = '<div class="alert alert-danger">Le fichier est trop volumineux. La limite est peut-être dépassée dans la configuration du serveur (php.ini).</div>';
+                break;
+            case UPLOAD_ERR_NO_FILE:
+                $message = '<div class="alert alert-danger">Aucun fichier n\'a été envoyé. Veuillez en sélectionner un.</div>';
+                break;
+            case UPLOAD_ERR_PARTIAL:
+                $message = '<div class="alert alert-danger">Le fichier n\'a été que partiellement téléchargé.</div>';
+                break;
+            default:
+                $message = '<div class="alert alert-danger">Une erreur inconnue est survenue lors de l\'envoi du fichier.</div>';
+                break;
+        }
+    }
+    else {
+        $message = '<div class="alert alert-danger">Erreur : Aucun fichier reçu.</div>';
     }
 
     // Si l'image a bien été uploadée et que les autres champs sont remplis
     if ($image_path_for_db && !empty($titre) && !empty($description)) {
         try {
-            $sql = "INSERT INTO portfolio (titre, description, categorie, image_url, visible, ordre_affichage) VALUES (?, ?, ?, ?, 1, 99)";
+            $sql = "INSERT INTO portfolio (titre, description, categorie, image_url, visible, ordre_affichage, date_creation) VALUES (?, ?, ?, ?, 1, 99, NOW())";
             $stmt = $pdo->prepare($sql);
-            $stmt->execute([$titre, $description, $categorie, $image_path_for_db]);
+            $stmt->execute([$titre, $description, $categorie, $image_path_for_db]); // NOW() est géré par SQL
             $message = '<div class="alert alert-success">Projet ajouté avec succès !</div>';
         } catch (PDOException $e) {
             $message = '<div class="alert alert-danger">Erreur de base de données: ' . $e->getMessage() . '</div>';
@@ -85,7 +103,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['delete_portfolio'])) 
 }
 
 // Récupère la liste de tous les projets du portfolio pour les afficher.
-$projets_portfolio = $pdo->query("SELECT * FROM portfolio ORDER BY ordre_affichage DESC")->fetchAll();
+$projets_portfolio = $pdo->query("SELECT * FROM portfolio ORDER BY date_creation DESC")->fetchAll();
 
 // Inclut l'en-tête de la page.
 include 'includes/header.inc.php';
