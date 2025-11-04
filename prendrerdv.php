@@ -87,11 +87,11 @@ include 'includes/header.inc.php';
             <div class="hero-pattern"></div>
             <div class="hero-gradient"></div>
             <div class="container">
-
-                <div class="row justify-content-center">
-                    <div class="col-lg-8 col-md-10">
+                <!-- Nouvelle structure en deux colonnes -->
+                <div class="row justify-content-center g-5">
+                    <!-- Colonne de gauche : Calendrier -->
+                    <div class="col-lg-7 col-md-12">
                         <div class="calendar-box bg-white p-4 p-md-5 shadow-lg rounded" data-aos="fade-up">
-                            <!-- En-tête du calendrier avec la navigation mois/année -->
                             <div class="calendar-header mb-4 text-center">
                                 <a href="?month=<?php echo $prev_month->format('m'); ?>&year=<?php echo $prev_month->format('Y'); ?>"
                                    class="btn btn-outline-dark float-start"><i class="fas fa-chevron-left"></i></a>
@@ -104,7 +104,6 @@ include 'includes/header.inc.php';
                                    class="btn btn-outline-dark float-end"><i class="fas fa-chevron-right"></i></a>
                             </div>
 
-                            <!-- Grille du calendrier -->
                             <table class="calendar table table-bordered text-center">
                                 <thead>
                                 <tr>
@@ -148,12 +147,8 @@ include 'includes/header.inc.php';
                                         echo "<td class='$today_class $day_class $disabled_class'>";
 
                                         if (!$is_past) {
-                                            // Si le jour n'est pas passé, il est cliquable et ouvre la modale.
-                                            // Les attributs `data-*` sont utilisés par JavaScript pour récupérer les informations.
-                                            echo "<button class='btn btn-link date-picker-btn' 
-                                                          data-date='$full_date' 
-                                                          data-status='$reserved_status'
-                                                          data-bs-toggle='modal' data-bs-target='#slotsModal'
+                                            // Si le jour n'est pas passé, il est cliquable.
+                                            echo "<button class='btn btn-link date-picker-btn' data-date='$full_date' data-status='$reserved_status'
                                                           " . ($reserved_status === 'fully-booked' ? 'disabled' : '') . "
                                                           >$day</button>";
                                         } else {
@@ -181,65 +176,32 @@ include 'includes/header.inc.php';
                             </table>
                         </div>
                     </div>
-                </div>
-
-                <!-- Modale Bootstrap pour la réservation, cachée par défaut -->
-                <div class="modal fade" id="slotsModal" tabindex="-1" aria-labelledby="slotsModalLabel" aria-hidden="true">
-                    <div class="modal-dialog modal-dialog-centered">
-                        <div class="modal-content">
-                            <div class="modal-header">
-                                <h5 class="modal-title" id="slotsModalLabel">Créneaux disponibles pour le <span id="selectedDateText"></span></h5>
-                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                            </div>
-                            <div class="modal-body">
-                                <!-- Conteneur où JavaScript affichera les créneaux horaires disponibles -->
-                                <div id="slotsContainer" class="text-center mb-4">
-                                    <p class="text-muted">Chargement des disponibilités...</p>
+                    <!-- Colonne de droite : Formulaire de RDV -->
+                    <div class="col-lg-5 col-md-12">
+                        <div class="appointment-form-container bg-white p-4 p-md-5 shadow-lg rounded" data-aos="fade-left">
+                            <h3 class="mb-4">Prendre rendez-vous</h3>
+                            <!-- Le formulaire est maintenant toujours visible -->
+                            <form id="reservationForm" action="traitement_rdv.php" method="POST" novalidate>
+                                <div class="mb-3">
+                                    <label class="form-label">Date sélectionnée</label>
+                                    <input type="text" id="selectedDateText" class="form-control" value="Veuillez choisir une date" readonly>
+                                    <input type="hidden" name="date_selectionnee" id="dateInput">
                                 </div>
-
-                                <hr>
-
-                                <!-- Formulaire de réservation, géré par JavaScript (fetch) -->
-                                <form id="reservationForm" action="traitement_rdv.php" method="POST">
-                                    <input type="hidden" name="date_selectionnee" id="dateInput" required>
-                                    <input type="hidden" name="creneau_selectionne" id="creneauInput" required>
-
-                                    <?php if (!isset($_SESSION['user_id'])): // Affiche ces champs uniquement si l'utilisateur n'est pas connecté ?>
-                                        <div class="mb-3">
-                                            <label for="rdvNom" class="form-label">Nom complet</label>
-                                            <input type="text" class="form-control" id="rdvNom" name="nom" required>
-                                        </div>
-                                        <div class="mb-3">
-                                            <label for="rdvEmail" class="form-label">Email</label>
-                                            <input type="email" class="form-control" id="rdvEmail" name="email" required>
-                                        </div>
+                                <div class="mb-3"><label class="form-label">Créneaux disponibles</label><div id="slotsContainer" class="text-center bg-light p-3 rounded"><p class="text-muted m-0">En attente d'une date...</p></div><input type="hidden" name="creneau_selectionne" id="creneauInput" required></div>
+                                    <?php if (!isset($_SESSION['user_id'])): ?>
+                                        <div class="mb-3"><label for="rdvNom" class="form-label">Nom complet</label><input type="text" class="form-control" id="rdvNom" name="nom" placeholder="Votre nom et prénom" required></div>
+                                        <div class="mb-3"><label for="rdvEmail" class="form-label">Email</label><input type="email" class="form-control" id="rdvEmail" name="email" placeholder="votre@email.com" required></div>
                                     <?php else: ?>
                                         <p class="text-center">Vous réservez en tant que <strong><?php echo htmlspecialchars($_SESSION['user_name']); ?></strong>.</p>
                                     <?php endif; ?>
-                                    <div class="mb-3">
-                                        <label for="rdvService" class="form-label">Service concerné</label>
-                                        <select class="form-select" id="rdvService" name="service_concerne" required>
-                                            <!-- Boucle pour peupler la liste des services -->
-                                            <option value="">-- Sélectionnez un service --</option>
-                                            <?php foreach ($services_list as $service): ?>
-                                                <option value="<?php echo htmlspecialchars($service['nom']); ?>">
-                                                    <?php echo htmlspecialchars($service['nom']); ?>
-                                                </option>
-                                            <?php endforeach; ?>
-                                            <option value="Autre">Autre</option>
-                                        </select>
-                                    </div>
-
-                                    <!-- Zone pour afficher les messages de succès ou d'erreur -->
-                                    <div id="reservationMessage" class="alert alert-info mt-3" style="display:none;"></div>
-
+                                    <div class="mb-3"><label for="rdvDescription" class="form-label">Pourquoi prenez-vous rendez-vous ?</label><textarea class="form-control" id="rdvDescription" name="description_rdv" rows="3" placeholder="Décrivez brièvement la raison de votre rendez-vous..." required></textarea></div>
+                                    <div id="reservationMessage" class="alert mt-3" style="display:none;"></div>
                                     <button type="submit" class="btn btn-gold w-100 mt-3" id="submitReservationBtn" disabled>Confirmer le Rendez-vous</button>
-                                </form>
-                            </div>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>
-
             </div>
         </section>
 

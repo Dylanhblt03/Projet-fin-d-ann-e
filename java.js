@@ -1,5 +1,5 @@
 // Attend que le contenu de la page (le DOM) soit entièrement chargé avant d'exécuter le script.
-document.addEventListener('DOMContentLoaded', function() {
+document.addEventListener("DOMContentLoaded", function () {
 
 // Initialisation de la bibliothèque AOS (Animate On Scroll) pour les animations au défilement.
 AOS.init({
@@ -104,199 +104,6 @@ $(document).on("keydown", function (e) {
 });
 
     // ===============================================
-    // ANIMATION COMPTEUR STATS
-    // ===============================================
-    // Sélectionne la section des statistiques.
-    const statsSection = document.querySelector('.stats-section');
-    if (statsSection) {
-        const counters = document.querySelectorAll('.counter');
-        const speed = 2000; // Vitesse de l'animation
-
-        // Fonction récursive pour animer les compteurs.
-        const animateCounters = () => {
-            counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target'); // La valeur cible à atteindre.
-                const count = +counter.innerText; // La valeur actuelle affichée.
-
-                const increment = target / speed; // Calcule de combien augmenter à chaque étape.
-
-                if (count < target) {
-                    counter.innerText = Math.ceil(count + increment); // Met à jour le texte avec la nouvelle valeur.
-                    setTimeout(animateCounters, 30); // Rappelle la fonction pour continuer l'animation.
-                } else {
-                    // Une fois la cible atteinte, formate le texte final.
-                    if (counter.getAttribute('data-target') === '100') {
-                        counter.innerText = target + '%';
-                    } else {
-                        counter.innerText = target + '+';
-                    }
-                }
-            });
-        };
-
-        // Utilise IntersectionObserver pour déclencher l'animation uniquement quand la section devient visible.
-        const observer = new IntersectionObserver((entries, observer) => {
-            entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    animateCounters();
-                    observer.unobserve(entry.target); // Arrête d'observer une fois l'animation lancée.
-                }
-            });
-        }, { threshold: 0.5 });
-
-        observer.observe(statsSection);
-    }
-
-    // ===============================================
-    // JAVASCRIPT / AJAX pour afficher les créneaux
-    // ===============================================
-
-    // Liste des créneaux horaires disponibles par défaut pour une journée.
-    const AVAILABLE_SLOTS = [
-        '09:00', '10:00', '11:00', // Matin
-        '14:00', '15:00', '16:00', // Après-midi
-        '17:00', '18:00'           // Fin de journée
-    ];
-
-    // Sélection des éléments du DOM pour la modale de réservation.
-    const slotsModal = document.getElementById('slotsModal');
-    // Si la modale existe, on initialise toute la logique de réservation
-    if (slotsModal) {
-        const selectedDateText = document.getElementById('selectedDateText');
-        const slotsContainer = document.getElementById('slotsContainer');
-        const dateInput = document.getElementById('dateInput');
-        const creneauInput = document.getElementById('creneauInput');
-        const submitBtn = document.getElementById('submitReservationBtn');
-        const reservationForm = document.getElementById('reservationForm');
-        const reservationMessage = document.getElementById('reservationMessage');
-
-        // Événement déclenché lorsque la modale est sur le point de s'afficher.
-        slotsModal.addEventListener('show.bs.modal', function(event) {
-            const button = event.relatedTarget; // Le bouton qui a déclenché la modale.
-            const date = button.getAttribute('data-date'); // Récupère la date depuis l'attribut du bouton.
-            const status = button.getAttribute('data-status'); // Récupère le statut (disponible, complet...).
-
-            // Mise à jour de l'interface de la modale avec les informations de la date sélectionnée.
-            selectedDateText.textContent = formatDateFr(date);
-            dateInput.value = date;
-            creneauInput.value = ''; // Réinitialiser le créneau
-            submitBtn.disabled = true;
-            reservationMessage.style.display = 'none';
-            reservationMessage.className = 'alert mt-3';
-
-            slotsContainer.innerHTML = '<p class="text-muted">Chargement des disponibilités...</p>'; // Message de chargement.
-
-            // Si le jour est déjà complet, on affiche un message et on arrête.
-            if (status === 'fully-booked') {
-                slotsContainer.innerHTML = '<p class="text-danger">Ce jour est malheureusement complet. Veuillez choisir une autre date.</p>';
-                return;
-            }
-
-            // Appel AJAX (avec fetch) pour obtenir les créneaux déjà réservés pour cette date.
-            fetch('ajax_get_slots.php?date=' + date) // Le script PHP qui renvoie les créneaux pris.
-                .then(response => response.json())
-                .then(reservedSlots => {
-                    displaySlots(date, reservedSlots);
-                })
-                .catch(error => {
-                    slotsContainer.innerHTML = '<p class="text-danger">Erreur lors du chargement des créneaux.</p>';
-                    console.error('Error fetching slots:', error);
-                });
-        });
-
-        // Fonction pour formater une date (ex: "2024-01-15") en format français lisible (ex: "lundi 15 janvier").
-        function formatDateFr(dateString) {
-            const date = new Date(dateString);
-            const options = { weekday: 'long', day: 'numeric', month: 'long' };
-            return date.toLocaleDateString('fr-FR', options);
-        }
-
-        // Fonction pour afficher les boutons de créneaux horaires.
-        function displaySlots(date, reservedSlots) {
-            let html = '<div class="btn-group flex-wrap" role="group" aria-label="Créneaux horaires">';
-            let availableCount = 0;
-
-            AVAILABLE_SLOTS.forEach(slot => {
-                const fullDateTime = date + ' ' + slot + ':00';
-                const isReserved = reservedSlots.includes(slot);
-                const btnClass = isReserved ? 'btn-secondary disabled' : 'btn-outline-gold slot-btn'; // Classe différente si réservé.
-                const disabledAttr = isReserved ? 'disabled' : ''; // Attribut 'disabled' si réservé.
-
-                if (!isReserved) {
-                    availableCount++;
-                }
-
-                html += `<button type="button" class="btn ${btnClass} m-1" data-slot="${slot}" ${disabledAttr}>${slot}</button>`;
-            });
-
-            html += '</div>';
-
-            // S'il n'y a aucun créneau disponible, on affiche un message.
-            if (availableCount === 0) {
-                 html = '<p class="text-danger">Désolé, tous les créneaux sont réservés pour ce jour.</p>';
-            }
-
-            slotsContainer.innerHTML = html;
-
-            // On ajoute les écouteurs d'événements sur les boutons de créneaux disponibles.
-            const slotButtons = slotsContainer.querySelectorAll('.slot-btn');
-            if (slotButtons.length > 0) {
-                slotButtons.forEach(button => {
-                    button.addEventListener('click', function() {
-                        // Gère la sélection visuelle du créneau.
-                        slotButtons.forEach(btn => btn.classList.remove('btn-gold', 'text-white'));
-                        this.classList.add('btn-gold', 'text-white');
-                        creneauInput.value = this.getAttribute('data-slot'); // Met à jour le champ caché du formulaire.
-                        submitBtn.disabled = false;
-                    });
-                });
-            }
-        }
-
-        reservationForm.addEventListener('submit', function(e) {
-            e.preventDefault(); // Empêche la soumission classique.
-
-            // Validation simple côté client.
-            if (!creneauInput.value) {
-                reservationMessage.className = 'alert alert-danger mt-3';
-                reservationMessage.textContent = 'Veuillez sélectionner un créneau horaire.';
-                reservationMessage.style.display = 'block';
-                return;
-            }
-
-            // Désactive le bouton pour éviter les double-clics.
-            submitBtn.disabled = true; submitBtn.textContent = 'Envoi en cours...';
-            // Envoi des données du formulaire via fetch.
-            fetch('traitement_rdv.php', {
-                method: 'POST',
-                body: new FormData(this)
-            })
-                .then(response => response.json())
-                .then(data => {
-                    if (data.success) { // Si la réservation a réussi.
-                        reservationMessage.className = 'alert alert-success mt-3';
-                        reservationMessage.textContent = 'Votre rendez-vous a été confirmé ! Nous vous contacterons bientôt.';
-                        reservationForm.reset();
-                        submitBtn.style.display = 'none'; 
-                    } else {
-                        reservationMessage.className = 'alert alert-danger mt-3';
-                        reservationMessage.textContent = data.message || 'Une erreur est survenue lors de la réservation.';
-                        submitBtn.disabled = false;
-                        submitBtn.textContent = 'Confirmer le Rendez-vous';
-                    }
-                    reservationMessage.style.display = 'block';
-                })
-                .catch(error => {
-                    reservationMessage.className = 'alert alert-danger mt-3';
-                    reservationMessage.textContent = 'Erreur réseau ou serveur.';
-                    reservationMessage.style.display = 'block';
-                    submitBtn.disabled = false;
-                    submitBtn.textContent = 'Confirmer le Rendez-vous';
-                    console.error('Fetch error:', error);
-                });
-        });
-    }
-    // ===============================================
     // CHATBOT
     // ===============================================
     // Sélection des éléments du DOM pour le chatbot.
@@ -367,4 +174,193 @@ $(document).on("keydown", function (e) {
             }
         });
     } // Fin de if(chatWindow)
+
+    // ===============================================
+    // ANIMATION COMPTEUR STATS
+    // ===============================================
+    const statsSection = document.querySelector('.stats-section');
+    if (statsSection) {
+        const counters = document.querySelectorAll('.counter');
+        const speed = 2000; // Vitesse de l'animation
+
+        const animateCounters = () => {
+            counters.forEach(counter => {
+                const target = +counter.getAttribute('data-target');
+                const count = +counter.innerText;
+                const increment = target / speed;
+
+                if (count < target) {
+                    counter.innerText = Math.ceil(count + increment);
+                    setTimeout(animateCounters, 30);
+                } else {
+                    if (counter.getAttribute('data-target') === '100') {
+                        counter.innerText = target + '%';
+                    } else {
+                        counter.innerText = target + '+';
+                    }
+                }
+            });
+        };
+
+        const observer = new IntersectionObserver((entries, observer) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    animateCounters();
+                    observer.unobserve(entry.target);
+                }
+            });
+        }, { threshold: 0.5 });
+
+        observer.observe(statsSection);
+    }
+
+    // ===============================================
+    // LOGIQUE DU CALENDRIER DE RENDEZ-VOUS
+    // ===============================================
+    const calendarBox = document.querySelector('.calendar-box');
+    if (calendarBox) {
+        const AVAILABLE_SLOTS = ['09:00', '10:00', '11:00', '14:00', '15:00', '16:00', '17:00', '18:00'];
+        const reservationForm = document.getElementById('reservationForm');
+        const selectedDateText = document.getElementById('selectedDateText');
+        const slotsContainer = document.getElementById('slotsContainer');
+        const dateInput = document.getElementById('dateInput');
+        const creneauInput = document.getElementById('creneauInput');
+        const submitBtn = document.getElementById('submitReservationBtn');
+        const reservationMessage = document.getElementById('reservationMessage');
+        // On sélectionne les boutons DANS le calendrier
+        const datePickerButtons = document.querySelectorAll('.date-picker-btn');
+
+        datePickerButtons.forEach(button => {
+            button.addEventListener('click', function() {
+                // Gérer la sélection visuelle
+                datePickerButtons.forEach(btn => btn.classList.remove('active'));
+                this.classList.add('active');
+
+                const date = this.getAttribute('data-date');
+                const status = this.getAttribute('data-status');
+
+                // Réinitialiser le formulaire
+                resetForm(date, status);
+
+                if (status === 'fully-booked') {
+                    slotsContainer.innerHTML = '<p class="text-danger">Ce jour est malheureusement complet.</p>';
+                    return;
+                }
+
+                fetchSlots(date);
+            });
+        });
+
+        function resetForm(date, status) {
+            selectedDateText.value = formatDateFr(date); // Met à jour le champ de date visible
+            dateInput.value = date;
+            creneauInput.value = '';
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Confirmer le Rendez-vous';
+            reservationMessage.style.display = 'none';
+            reservationMessage.className = 'alert mt-3';
+            slotsContainer.innerHTML = '<p class="text-muted">Chargement des disponibilités...</p>';
+        }
+        
+        function fetchSlots(date) {
+            fetch('ajax_get_slots.php?date=' + date)
+            .then(response => response.json())
+            .then(data => {
+                if (data.error) {
+                    slotsContainer.innerHTML = `<p class="text-danger">Erreur: ${data.error}</p>`;
+                    return;
+                }
+                displaySlots(date, data);
+            })
+            .catch(error => {
+                slotsContainer.innerHTML = '<p class="text-danger">Erreur lors du chargement des créneaux.</p>';
+                console.error('Error fetching slots:', error);
+            });
+        }
+
+        function formatDateFr(dateString) {
+            const date = new Date(dateString);
+            const options = { weekday: 'long', day: 'numeric', month: 'long' };
+            return date.toLocaleDateString('fr-FR', options);
+        }
+
+        function displaySlots(date, reservedSlots) {
+            let html = '<div class="btn-group flex-wrap" role="group" aria-label="Créneaux horaires">';
+            let availableCount = 0;
+
+            AVAILABLE_SLOTS.forEach(slot => {
+                const isReserved = reservedSlots.includes(slot);
+                const btnClass = isReserved ? 'btn-secondary disabled' : 'btn-outline-gold slot-btn';
+                const disabledAttr = isReserved ? 'disabled' : '';
+
+                if (!isReserved) {
+                    availableCount++;
+                }
+
+                html += `<button type="button" class="btn ${btnClass} m-1" data-slot="${slot}" ${disabledAttr}>${slot}</button>`;
+            });
+
+            html += '</div>';
+
+            if (availableCount === 0) {
+                html = '<p class="text-danger">Désolé, tous les créneaux sont réservés pour ce jour.</p>';
+            }
+
+            slotsContainer.innerHTML = html;
+
+            const slotButtons = slotsContainer.querySelectorAll('.slot-btn');
+            slotButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    slotButtons.forEach(btn => btn.classList.remove('btn-gold', 'text-white'));
+                    this.classList.add('btn-gold', 'text-white');
+                    creneauInput.value = this.getAttribute('data-slot');
+                    submitBtn.disabled = false;
+                });
+            });
+        }
+
+        reservationForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+
+            if (!creneauInput.value) {
+                reservationMessage.className = 'alert alert-danger mt-3';
+                reservationMessage.textContent = 'Veuillez sélectionner un créneau horaire.';
+                reservationMessage.style.display = 'block';
+                return;
+            }
+
+            submitBtn.disabled = true;
+            submitBtn.textContent = 'Envoi en cours...';
+
+            fetch('traitement_rdv.php', {
+                method: 'POST',
+                body: new FormData(this)
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data.success) {
+                    reservationMessage.className = 'alert alert-success mt-3';
+                    reservationMessage.textContent = data.message;
+                    // On pourrait rafraîchir la page pour mettre à jour le calendrier
+                    setTimeout(() => window.location.reload(), 2000);
+
+                    // On pourrait aussi rafraîchir le calendrier ici
+                } else {
+                    reservationMessage.className = 'alert alert-danger mt-3';
+                    reservationMessage.textContent = data.message || 'Une erreur est survenue lors de la réservation.';
+                    submitBtn.disabled = false;
+                    submitBtn.textContent = 'Confirmer le Rendez-vous';
+                }
+                reservationMessage.style.display = 'block';
+            })
+            .catch(error => {
+                reservationMessage.className = 'alert alert-danger mt-3';
+                reservationMessage.textContent = 'Erreur réseau ou serveur.';
+                reservationMessage.style.display = 'block';
+                submitBtn.disabled = false;
+                submitBtn.textContent = 'Confirmer le Rendez-vous';
+                console.error('Fetch error:', error);
+            });
+        });
+    }
 });

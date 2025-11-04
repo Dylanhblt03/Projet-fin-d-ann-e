@@ -63,11 +63,14 @@
         </div>
 
     <!-- Scripts JavaScript chargés à la fin du body pour de meilleures performances -->
+    <!-- 1. jQuery (requis pour Bootstrap JS et notre code personnalisé) -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <!-- 2. Bootstrap Bundle (inclut Popper.js) -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+    <!-- 3. Autres bibliothèques -->
     <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <script>AOS.init();</script> <!-- Initialisation simple de la bibliothèque AOS -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.7.1/jquery.min.js"></script>
-    <script src="java.js"></script> <!-- Votre fichier JavaScript personnalisé -->
+    <!-- 4. Votre script personnalisé (qui initialise AOS et gère le reste) -->
+    <script src="java.js"></script>
     
 </body>
 </html>

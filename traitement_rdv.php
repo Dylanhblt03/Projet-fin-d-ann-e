@@ -42,10 +42,10 @@ if (isset($_SESSION['user_id']) && $_SESSION['user_role'] === 'client') {
 
 $date = $_POST['date_selectionnee'] ?? '';
 $time = $_POST['creneau_selectionne'] ?? '';
-$service = trim($_POST['service_concerne'] ?? '');
+$description = trim($_POST['description_rdv'] ?? 'Aucune description fournie.');
 
 // Validation simple des données côté serveur. C'est une sécurité essentielle.
-if (empty($date) || empty($time) || empty($nom) || empty($email) || empty($service)) {
+if (empty($date) || empty($time) || empty($nom) || empty($email) || empty($description)) {
     echo json_encode(['success' => false, 'message' => 'Tous les champs sont requis.']);
     exit();
 }
@@ -80,7 +80,7 @@ try {
 // 4. Insertion dans la table `rendez_vous` en utilisant les nouvelles colonnes
 try {
     // Le titre est généré automatiquement pour plus de clarté dans le back-office
-    $titre_rdv = "RDV - " . $service . " - " . $nom;
+    $titre_rdv = "RDV Web - " . $nom;
 
     $stmt = $pdo->prepare("
         INSERT INTO rendez_vous (client_id, titre, description, date_rdv, heure_debut, type_rdv, statut, date_creation)
@@ -90,7 +90,7 @@ try {
     $stmt->execute([
         ':client_id'   => $client_id, // Sera NULL si l'utilisateur n'est pas connecté
         ':titre'       => $titre_rdv,
-        ':description' => 'Service concerné : ' . $service,
+        ':description' => $description,
         ':date_rdv'    => $date_rdv,
         ':heure_debut' => $heure_debut
     ]);
@@ -112,7 +112,7 @@ try {
     $mail->Body    = "Un nouveau rendez-vous a été pris :\n\n" .
                      "Nom : $nom\n" .
                      "Email : $email\n" .
-                     "Service concerné : $service\n\n" .
+                     "Description : $description\n\n" .
                      "Date et heure : " . $date_heure_formattee;
 
     $mail->send();

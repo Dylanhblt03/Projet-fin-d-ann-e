@@ -78,19 +78,19 @@ if (empty($reponse_finale)) {
             break;
 
         case (str_contains($lower_question, 'prix') || str_contains($lower_question, 'tarif') || str_contains($lower_question, 'coûte')):
-        $reponse_finale = "Nos tarifs dépendent de la complexité du projet. Vous pouvez consulter la page [Services](/service.php) pour des prix indicatifs, ou [prendre rendez-vous](/prendrerdv.php) pour un devis précis.";
+        $reponse_finale = "Nos tarifs dépendent de la complexité du projet. Vous pouvez consulter la page service pour des prix indicatifs, ou prendre rendez-vous pour un devis précis.";
             break;
 
         case (str_contains($lower_question, 'contact') || str_contains($lower_question, 'parler') || str_contains($lower_question, 'devis') || str_contains($lower_question, 'rdv')):
-        $reponse_finale = "Pour obtenir un devis ou discuter directement, vous pouvez [nous contacter ici](/contact.php) ou utiliser notre [calendrier de prise de rendez-vous](/prendrerdv.php).";
+        $reponse_finale = "Pour obtenir un devis ou discuter directement, vous pouvez nous contacter ici sur la page contact ou utiliser notre calendrier de prise de rendez-vous";
             break;
 
         case (str_contains($lower_question, 'délai') || str_contains($lower_question, 'temps') || str_contains($lower_question, 'durée')):
-            $reponse_finale = "La durée d'un projet varie beaucoup. Un site vitrine simple peut prendre 2-4 semaines, tandis qu'un site e-commerce complexe peut nécessiter plusieurs mois. Le mieux est de [prendre rendez-vous](/prendrerdv.php) pour en discuter.";
+            $reponse_finale = "La durée d'un projet varie beaucoup. Un site vitrine simple peut prendre 2-4 semaines, tandis qu'un site e-commerce complexe peut nécessiter plusieurs mois. Le mieux est de prendre rendez-vous pour en discuter.";
             break;
 
         case (str_contains($lower_question, 'portfolio') || str_contains($lower_question, 'exemple') || str_contains($lower_question, 'réalisation')):
-            $reponse_finale = "Bien sûr ! Vous pouvez consulter mes dernières réalisations sur la page d'accueil, dans la section [Portfolio](/index.php#portfolio).";
+            $reponse_finale = "Bien sûr ! Vous pouvez consulter mes dernières réalisations sur la page d'accueil, dans la section Portfolio.";
             break;
 
         case (str_contains($lower_question, 'qui êtes-vous') || str_contains($lower_question, 'agence')):
@@ -102,7 +102,7 @@ if (empty($reponse_finale)) {
             break;
 
         default:
-        $reponse_finale = "Désolé, je n'ai pas trouvé d'information pertinente. J'ai de l'information sur nos **services**, **prix** et comment **nous contacter**. Si votre question est complexe, veuillez [remplir le formulaire de contact](/contact.php).";
+        $reponse_finale = "Désolé, je n'ai pas trouvé d'information pertinente. J'ai de l'information sur nos services, prix et comment nous contacter. Si votre question est complexe, veuillez remplir le formulaire de contact.";
     }
 }
 

@@ -13,8 +13,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/css/aos.min.css" rel="stylesheet"> <!-- Bibliothèque pour les animations au défilement (AOS) -->
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@300;400;500;600;700;800&display=swap" rel="stylesheet"> <!-- Police d'écriture Google Fonts -->
     <link href="cssprojet.css" rel="stylesheet"> <!-- Votre feuille de style personnalisée -->
-    <!-- Inclusion de jQuery, nécessaire pour certaines fonctionnalités comme le formulaire de contact AJAX -->
-    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
     </head>
 <body>
 
