@@ -831,6 +831,24 @@ margin-top: 40px;
 .stat-number {
 font-size: 2rem;
 }
+
+    /* Ajustement de la taille des icônes de service sur mobile */
+    .service-icon {
+        font-size: 2rem; /* Réduit la taille de l'icône */
+    }
+
+    /* Ajustement de la taille des boutons sur mobile */
+    .btn-gold, .btn-outline-gold {
+        padding: 10px 22px; /* Réduit le rembourrage des boutons */
+        font-size: 0.8rem; /* Réduit légèrement la taille du texte */
+    }
+
+    /* Assure que les boutons de la section hero se superposent correctement sur mobile */
+    .hero-content .btn {
+        display: block;
+        width: 100%;
+        margin-bottom: 15px;
+    }
 }
 
 /* =============================================== */
@@ -887,6 +905,44 @@ border: 1px solid rgba(255, 255, 255, 0.18);
         font-weight: 800;
     }
     background: #ffffff9a;
+}
+
+/* =============================================== */
+/* AJUSTEMENTS RESPONSIVES SPÉCIFIQUES */
+/* =============================================== */
+@media (max-width: 767.98px) {
+    /* Centre les éléments de la carte de service sur mobile */
+    .services-list-section .col-md-6 {
+        text-align: center;
+    }
+
+    /* Place l'icône au-dessus du titre sur mobile */
+    .services-list-section .flex-md-row-reverse {
+        flex-direction: column-reverse !important;
+    }
+    .services-list-section .row:not(.flex-md-row-reverse) {
+        flex-direction: column-reverse !important;
+    }
+    .services-list-section .fa-5x {
+        margin-bottom: 2rem; /* Ajoute de l'espace sous l'icône */
+    }
+}
+
+/* =============================================== */
+/* RESPONSIVE CALENDAR STYLES */
+/* =============================================== */
+@media (max-width: 767.98px) { /* Styles pour les écrans plus petits que 768px (point de rupture 'md' de Bootstrap) */
+    .calendar.table th,
+    .calendar.table td {
+        min-width: 45px; /* Assure que les cellules ont une largeur minimale pour que le tableau dépasse l'écran */
+        padding: 0.4rem; /* Réduit le rembourrage pour les petits écrans */
+        font-size: 0.85rem; /* Taille de police légèrement plus petite pour la lisibilité */
+    }
+
+    .calendar.table .date-picker-btn {
+        padding: 0.2rem 0.4rem; /* Ajuste le rembourrage du bouton */
+        font-size: 0.85rem; /* Ajuste la taille de police du bouton */
+    }
 }
 
 /* ================================================= */
