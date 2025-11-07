@@ -104,76 +104,78 @@ include 'includes/header.inc.php';
                                    class="btn btn-outline-dark float-end"><i class="fas fa-chevron-right"></i></a>
                             </div>
 
-                            <table class="calendar table table-bordered text-center">
-                                <thead>
-                                <tr>
-                                    <th>Lun</th>
-                                    <th>Mar</th>
-                                    <th>Mer</th>
-                                    <th>Jeu</th>
-                                    <th>Ven</th>
-                                    <th>Sam</th>
-                                    <th>Dim</th>
-                                </tr>
-                                </thead>
-                                <tbody>
-                                <tr>
-                                    <?php
-                                    // 1. Crée des cellules vides pour le décalage du premier jour du mois.
-                                    for ($i = 1; $i < $start_day_of_week; $i++): ?>
-                                        <td></td>
-                                    <?php endfor;
+                            <div class="table-responsive">
+                                <table class="calendar table table-bordered text-center">
+                                    <thead>
+                                    <tr>
+                                        <th>Lun</th>
+                                        <th>Mar</th>
+                                        <th>Mer</th>
+                                        <th>Jeu</th>
+                                        <th>Ven</th>
+                                        <th>Sam</th>
+                                        <th>Dim</th>
+                                    </tr>
+                                    </thead>
+                                    <tbody>
+                                    <tr>
+                                        <?php
+                                        // 1. Crée des cellules vides pour le décalage du premier jour du mois.
+                                        for ($i = 1; $i < $start_day_of_week; $i++): ?>
+                                            <td></td>
+                                        <?php endfor;
 
-                                    // 2. Boucle pour afficher chaque jour du mois.
-                                    $day_counter = $start_day_of_week;
-                                    for ($day = 1; $day <= $num_days; $day++):
-                                        $full_date = "$year-$month-" . str_pad($day, 2, '0', STR_PAD_LEFT);
-                                        $today_class = ($day == date('j') && $month == date('m') && $year == date('Y')) ? 'today' : ''; // Classe pour le jour actuel.
-                                        $reserved_status = $reserved_days[$day] ?? ''; // Statut de réservation (complet, partiel, vide).
-                                        $is_past = strtotime($full_date) < strtotime(date('Y-m-d')); // Vérifie si le jour est dans le passé.
-                                        $disabled_class = $is_past ? 'disabled' : ''; // Classe pour désactiver les jours passés.
+                                        // 2. Boucle pour afficher chaque jour du mois.
+                                        $day_counter = $start_day_of_week;
+                                        for ($day = 1; $day <= $num_days; $day++):
+                                            $full_date = "$year-$month-" . str_pad($day, 2, '0', STR_PAD_LEFT);
+                                            $today_class = ($day == date('j') && $month == date('m') && $year == date('Y')) ? 'today' : ''; // Classe pour le jour actuel.
+                                            $reserved_status = $reserved_days[$day] ?? ''; // Statut de réservation (complet, partiel, vide).
+                                            $is_past = strtotime($full_date) < strtotime(date('Y-m-d')); // Vérifie si le jour est dans le passé.
+                                            $disabled_class = $is_past ? 'disabled' : ''; // Classe pour désactiver les jours passés.
 
-                                        // Définit la classe CSS de fond en fonction de la disponibilité.
-                                        $day_class = '';
-                                        if ($reserved_status === 'fully-booked') {
-                                            $day_class = 'bg-danger text-white fully-booked'; // Complètement réservé
-                                        } elseif ($reserved_status === 'partially-booked') {
-                                            $day_class = 'bg-warning partially-booked'; // Réservé mais avec des créneaux
-                                        } elseif (!$is_past) {
-                                            $day_class = 'bg-success text-white available'; // Entièrement disponible
+                                            // Définit la classe CSS de fond en fonction de la disponibilité.
+                                            $day_class = '';
+                                            if ($reserved_status === 'fully-booked') {
+                                                $day_class = 'bg-danger text-white fully-booked'; // Complètement réservé
+                                            } elseif ($reserved_status === 'partially-booked') {
+                                                $day_class = 'bg-warning partially-booked'; // Réservé mais avec des créneaux
+                                            } elseif (!$is_past) {
+                                                $day_class = 'bg-success text-white available'; // Entièrement disponible
+                                            }
+
+                                            // Affiche la cellule du jour.
+                                            echo "<td class='$today_class $day_class $disabled_class'>";
+
+                                            if (!$is_past) {
+                                                // Si le jour n'est pas passé, il est cliquable.
+                                                echo "<button class='btn btn-link date-picker-btn' data-date='$full_date' data-status='$reserved_status'
+                                                              " . ($reserved_status === 'fully-booked' ? 'disabled' : '') . "
+                                                              >$day</button>";
+                                            } else {
+                                                // Jours passés non cliquables
+                                                echo "<time datetime='$full_date'>$day</time>";
+                                            }
+
+                                            echo "</td>";
+
+                                            // Passe à la ligne suivante dans le tableau après chaque dimanche.
+                                            if ($day_counter % 7 == 0 && $day < $num_days) {
+                                                echo "</tr><tr>";
+                                            }
+                                            $day_counter++;
+                                        endfor;
+
+                                        // 3. Crée des cellules vides pour compléter la dernière semaine du mois.
+                                        while ($day_counter % 7 !== 1) {
+                                            echo "<td></td>";
+                                            $day_counter++;
                                         }
-
-                                        // Affiche la cellule du jour.
-                                        echo "<td class='$today_class $day_class $disabled_class'>";
-
-                                        if (!$is_past) {
-                                            // Si le jour n'est pas passé, il est cliquable.
-                                            echo "<button class='btn btn-link date-picker-btn' data-date='$full_date' data-status='$reserved_status'
-                                                          " . ($reserved_status === 'fully-booked' ? 'disabled' : '') . "
-                                                          >$day</button>";
-                                        } else {
-                                            // Jours passés non cliquables
-                                            echo "<time datetime='$full_date'>$day</time>";
-                                        }
-
-                                        echo "</td>";
-
-                                        // Passe à la ligne suivante dans le tableau après chaque dimanche.
-                                        if ($day_counter % 7 == 0 && $day < $num_days) {
-                                            echo "</tr><tr>";
-                                        }
-                                        $day_counter++;
-                                    endfor;
-
-                                    // 3. Crée des cellules vides pour compléter la dernière semaine du mois.
-                                    while ($day_counter % 7 !== 1) {
-                                        echo "<td></td>";
-                                        $day_counter++;
-                                    }
-                                    ?>
-                                </tr>
-                                </tbody>
-                            </table>
+                                        ?>
+                                    </tr>
+                                    </tbody>
+                                </table>
+                            </div>
                         </div>
                     </div>
                     <!-- Colonne de droite : Formulaire de RDV -->
