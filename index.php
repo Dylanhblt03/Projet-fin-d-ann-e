@@ -178,15 +178,8 @@ include 'includes/header.inc.php';
                     // Logique pour varier la taille des colonnes et créer une grille asymétrique.
                     $current_index = ($delay - 200) / 100; // 0, 1, 2, 3, 4
                     $col_class = 'col-md-4'; // Valeur par défaut
-                    if ($current_index === 0 || $current_index === 1) {
-                        $col_class = 'col-md-6'; // Les deux premiers
-                    } elseif ($current_index === 2) {
-                        $col_class = 'col-md-5'; // Le troisième
-                    } elseif ($current_index === 3) {
-                        $col_class = 'col-md-3'; // Le quatrième
-                    } elseif ($current_index === 4) {
-                        $col_class = 'col-md-4'; // Le cinquième
-                    }
+                    if ($current_index === 0 || $current_index === 1) 
+
                 ?>
                     <div class="<?php echo $col_class; ?> mb-4" data-aos="zoom-in" data-aos-delay="<?php echo $delay; ?>">
                         <div class="portfolio-item">
