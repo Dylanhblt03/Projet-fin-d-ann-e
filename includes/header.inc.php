@@ -1,4 +1,10 @@
-
+<?php
+// Démarre ou reprend une session existante sur toutes les pages.
+// Doit être la toute première chose dans le script.
+if (session_status() == PHP_SESSION_NONE) {
+    session_start();
+}
+?>
 <!DOCTYPE html>
 <html lang="fr">
 <head>
