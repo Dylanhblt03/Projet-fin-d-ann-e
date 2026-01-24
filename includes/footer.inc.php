@@ -1,76 +1,115 @@
-        <!-- Pied de page du site -->
-        <footer>
-            <div class="container">
-                <div class="row">
-                    <!-- Section 1: Logo et description -->
-                    <div class="col-md-4 mb-4">
-                        <div class="footer-logo">Oléris</div>
-                        <p class="footer-text">
-                            Votre partenaire digital pour des projets web innovants et performants. Excellence, créativité et sur-mesure.
-                        </p>
-                    </div>
-                    <!-- Section 2: Liens de navigation rapides -->
-                    <div class="col-md-4 mb-4">
-                        <h4 class="footer-title">Liens Rapides</h4>
-                        <ul class="footer-links">
-                            <li><a href="/index.php#accueil">Accueil</a></li>
-                            <li><a href="/index.php#services">Services</a></li>
-                            <li><a href="/index.php#portfolio">Portfolio</a></li>
-                            <li><a href="/index.php#contact">Contact</a></li>
-                        </ul>
-                    </div>
-                    <!-- Section 3: Liens vers les réseaux sociaux -->
-                    <div class="col-md-4 mb-4">
-                        <h4 class="footer-title">Me Suivre</h4>
-                        <div class="social-links">
-                            <a href="https://www.linkedin.com/in/humblot-dylan-49835b341/" target="_blank"><i class="fab fa-linkedin-in"></i></a>
-                            <a href="https://github.com/Dylanhblt03" target="_blank"><i class="fab fa-github"></i></a>
-                            <a href="https://www.instagram.com/nuagedencre/?igsh=MXViOTA2N3A3amFudg%3D%3D#" target="_blank"><i class="fab fa-instagram"></i></a>
-                        </div>
-                    </div>
+<footer class="site-footer">
+    <div class="container">
+        <div class="row footer-content justify-content-between">
+            <div class="col-md-3 mb-4 text-center">
+                <div class="footer-brand">
+                    <a class="navbar-brand logo-text" href="/">
+                        <img src="/images/oleris.jpg" alt="Logo Oléris - Agence Web" class="footer-logo" width="150">
+                    </a>
                 </div>
-                <!-- Ligne de copyright -->
-                <div class="copyright">
-                    <p class="mb-0">&copy; 2025 Oléris. Tous droits réservés.</p>
-                </div>
+                <p class="footer-description mt-3">
+                    Votre partenaire digital pour des projets web innovants et performants. Expertise en développement, design et stratégie.
+                </p>
             </div>
-        </footer>
 
-        <!-- =============================================== -->
-        <!-- CHATBOT HTML -->
-        <!-- =============================================== -->
-        <!-- Bouton flottant pour ouvrir/fermer le chatbot -->
-        <div id="chatbot-toggle-btn" class="chatbot-toggle-btn">
-            <i class="fas fa-comment-dots"></i>
-        </div>
-        
-        <!-- Fenêtre du chatbot, cachée par défaut -->
-        <div id="chatbot-window" class="chatbot-window">
-            <!-- En-tête du chatbot -->
-            <div class="chatbot-header">
-                <span class="chatbot-title">Oléris Assistant</span>
-                <button id="chatbot-close-btn" class="chatbot-close-btn">&times;</button>
+            <div class="col-md-3 mb-4 text-center">
+                <h4 class="footer-title">Navigation</h4>
+                <ul class="footer-links list-unstyled d-inline-block text-start">
+                    <li><a href="/"><i class="fas fa-chevron-right me-2"></i>Accueil</a></li>
+                    <li><a href="/service"><i class="fas fa-chevron-right me-2"></i>Nos Services</a></li>
+                    <li><a href="/realisation"><i class="fas fa-chevron-right me-2"></i>Portfolio</a></li>
+                    <li><a href="/contact"><i class="fas fa-chevron-right me-2"></i>Contact</a></li>
+                </ul>
             </div>
-            <!-- Corps du chatbot où les messages s'affichent -->
-            <div class="chatbot-body" id="chatbot-messages">
-                <div class="message bot-message">Bonjour ! Je suis l'assistant Oléris. Posez-moi une question sur nos services, nos tarifs ou votre projet pour commencer.</div>
+
+            <div class="col-md-3 mb-4 text-center">
+                <h4 class="footer-title">Contact</h4>
+                <ul class="footer-contact list-unstyled d-inline-block text-start">
+                    <li class="mb-3">
+                        <a href="tel:+33677508835" class="text-decoration-none text-reset">
+                            <i class="fas fa-phone text-gold me-2"></i>06 77 50 88 35
+                        </a>
+                    </li>
+                    <li>
+                        <a href="mailto:contact@oleris.fr" class="text-decoration-none text-reset">
+                            <i class="fas fa-envelope text-gold me-2"></i>contact@oleris.fr
+                        </a>
+                    </li>
+                </ul>
             </div>
-            <!-- Pied de page du chatbot avec le champ de saisie et le bouton d'envoi -->
-            <div class="chatbot-footer">
-                <input type="text" id="chatbot-input" placeholder="Écrivez votre question..." autofocus>
-                <button id="chatbot-send-btn" class="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+
+            <div class="col-md-3 mb-4 text-center">
+                <h4 class="footer-title">Suivez l'Agence</h4>
+                <div class="social-links">
+                    <a href="https://www.linkedin.com/in/humblot-dylan-49835b341/" target="_blank" rel="noopener" aria-label="LinkedIn">
+                        <i class="fab fa-linkedin-in"></i>
+                    </a>
+                    <a href="https://github.com/Dylanhblt03" target="_blank" rel="noopener" aria-label="GitHub">
+                        <i class="fab fa-github"></i>
+                    </a>
+                    <a href="https://www.instagram.com/nuagedencre/" target="_blank" rel="noopener" aria-label="Instagram">
+                        <i class="fab fa-instagram"></i>
+                    </a>
+                </div>
             </div>
         </div>
 
-    <!-- Scripts JavaScript chargés à la fin du body pour de meilleures performances -->
-    <!-- 1. jQuery (requis pour Bootstrap JS et notre code personnalisé) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
-    <!-- 2. Bootstrap Bundle (inclut Popper.js) -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
-    <!-- 3. Autres bibliothèques -->
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
-    <!-- 4. Votre script personnalisé (qui initialise AOS et gère le reste) -->
-    <script src="java.js"></script>
-    
+        <hr class="border-secondary opacity-25">
+
+        <div class="footer-bottom py-3">
+            <div class="row align-items-center">
+                <div class="col-md-6 text-center text-md-start">
+                    <p class="mb-0">&copy; <?php echo date('Y'); ?> **Oléris**. Tous droits réservés.</p>
+                </div>
+                <div class="col-md-6 text-center text-md-end">
+                    <a href="/mentions-legales" class="text-white-50 text-decoration-none small">Mentions Légales</a>
+                    <span class="text-white-50 mx-2">|</span>
+                    <a href="/politique-confidentialite" class="text-white-50 text-decoration-none small">Confidentialité</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div id="cookie-banner" class="cookie-banner shadow-lg">
+    <div class="container d-flex flex-column flex-md-row align-items-center justify-content-between py-3">
+        <div class="cookie-text me-md-4 mb-3 mb-md-0">
+            <i class="fas fa-cookie-bite text-gold me-2"></i>
+            <span>En poursuivant votre navigation, vous acceptez l’utilisation de cookies pour améliorer votre expérience sur **Oléris**.</span>
+        </div>
+        <div class="cookie-buttons">
+            <button id="accept-cookies" class="btn btn-gold btn-sm px-4 me-2">Accepter</button>
+            <a href="/politique-confidentialite" class="text-white-50 small text-decoration-none">En savoir plus</a>
+        </div>
+    </div>
+</div>
+</footer>
+
+<div id="chatbot-toggle-btn" class="chatbot-toggle-btn" aria-label="Ouvrir l'assistant">
+    <i class="fas fa-comment-dots"></i>
+</div>
+
+<div id="chatbot-window" class="chatbot-window">
+    <div class="chatbot-header">
+        <span class="chatbot-title">Oléris Assistant</span>
+        <button id="chatbot-close-btn" class="chatbot-close-btn" aria-label="Fermer">&times;</button>
+    </div>
+    <div class="chatbot-body" id="chatbot-messages">
+        <div class="message bot-message">Bonjour ! Je suis l'assistant Oléris. Comment puis-je vous aider aujourd'hui ?</div>
+    </div>
+    <div class="chatbot-footer">
+        <input type="text" id="chatbot-input" placeholder="Posez votre question..." aria-label="Message au chatbot">
+        <button id="chatbot-send-btn" class="chatbot-send-btn"><i class="fas fa-paper-plane"></i></button>
+    </div>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap/5.3.2/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/aos/2.3.4/aos.js"></script>
+<script src="/script/java.js" defer></script>
+
+<!-- Preload critical resources -->
+<link rel="preload" href="/css/cssprojet.css" as="style">
+<link rel="preload" href="/images/oleris.jpg" as="image">
+
 </body>
 </html>

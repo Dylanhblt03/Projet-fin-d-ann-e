@@ -1,0 +1,19 @@
+# Autorise tous les robots (Google, Bing, etc.)
+User-agent: *
+
+# On autorise l'indexation de tout le site public
+Allow: /
+
+# On interdit l'accès aux dossiers "techniques" pour ne pas gaspiller le budget d'exploration
+Disallow: /includes/
+Disallow: /bdd/
+Disallow: /script/
+Disallow: /css/
+Disallow: /images/  # Optionnel, selon si tu veux que les images soient indexées via les pages
+Disallow: /uploads/  # Protège les fichiers uploadés
+
+# Crawl-delay pour être poli avec les moteurs de recherche
+Crawl-delay: 1
+
+# Indique l'emplacement du plan de site
+Sitemap: https://tonsite.com/sitemap.php
