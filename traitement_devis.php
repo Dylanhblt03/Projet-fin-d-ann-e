@@ -8,7 +8,6 @@ if ($_SERVER["REQUEST_METHOD"] != "POST") {
     exit();
 }
 
-// 1. Sécurité & Nettoyage
 if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
     $_SESSION['flash_message'] = "Session expirée.";
     $_SESSION['flash_type'] = 'danger';
@@ -25,13 +24,11 @@ $budget = trim(htmlspecialchars($_POST['budget'] ?? ''));
 $date_souhaitee = trim(htmlspecialchars($_POST['date_souhaitee'] ?? ''));
 $message = trim(htmlspecialchars($_POST['message']));
 
-// Construire le message complet avec les infos supplémentaires
 $message_complet = $message;
 if (!empty($entreprise)) $message_complet .= "\n\nEntreprise: " . $entreprise;
 if (!empty($budget)) $message_complet .= "\n\nBudget indicatif: " . $budget;
 if (!empty($date_souhaitee)) $message_complet .= "\n\nDate souhaitée: " . $date_souhaitee;
 
-// 2. Enregistrement BDD
 $sql = "INSERT INTO contacts (nom, email, telephone, service, message, statut, date_creation, client_id) 
         VALUES (?, ?, ?, ?, ?, 'nouveau', NOW(), 0)";
 
@@ -44,7 +41,6 @@ if ($stmt = $conn->prepare($sql)) {
     $stmt->close();
 }
 
-// 3. Envoi de l'email
 $email_success = false;
 if ($db_success) {
     try {
@@ -76,7 +72,6 @@ if ($db_success) {
     }
 }
 
-// 4. Gestion des messages
 if ($db_success) {
     if ($email_success) {
         $_SESSION['flash_message'] = "Votre demande de devis a bien été envoyée !";

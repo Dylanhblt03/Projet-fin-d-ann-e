@@ -28,11 +28,11 @@ document.addEventListener("DOMContentLoaded", function () {
     // Smooth Scroll pour les ancres
     document.querySelectorAll('a[href^="#"]').forEach((anchor) => {
         anchor.addEventListener("click", function (e) {
-            const href = this.getAttribute("href");
+            let href = this.getAttribute("href");
             if (href === '#') return;
 
             try {
-                const target = document.querySelector(href);
+                let target = document.querySelector(href);
                 if (target) {
                     e.preventDefault();
                     target.scrollIntoView({
@@ -83,14 +83,14 @@ document.addEventListener("DOMContentLoaded", function () {
        4. CHATBOT PROFESSIONNEL
        --------------------------------------------------------- */
     
-    const chatWindow = document.getElementById('chatbot-window');
+    let chatWindow = document.getElementById('chatbot-window');
     
     if (chatWindow) {
-        const toggleBtn = document.getElementById('chatbot-toggle-btn');
-        const closeBtn = document.getElementById('chatbot-close-btn');
-        const input = document.getElementById('chatbot-input');
-        const sendBtn = document.getElementById('chatbot-send-btn');
-        const messagesContainer = document.getElementById('chatbot-messages');
+        let toggleBtn = document.getElementById('chatbot-toggle-btn');
+        let closeBtn = document.getElementById('chatbot-close-btn');
+        let input = document.getElementById('chatbot-input');
+        let sendBtn = document.getElementById('chatbot-send-btn');
+        let messagesContainer = document.getElementById('chatbot-messages');
 
         // Ouvrir/Fermer le chat
         toggleBtn.addEventListener('click', () => {
@@ -104,16 +104,16 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Ajouter une réponse du Bot
         function addBotResponse(text, url, label) {
-            const messageDiv = document.createElement('div');
+            let messageDiv = document.createElement('div');
             messageDiv.classList.add('message', 'bot-message');
             messageDiv.textContent = text;
             messagesContainer.appendChild(messageDiv);
 
             if (url) {
-                const btnWrapper = document.createElement('div');
+                let btnWrapper = document.createElement('div');
                 btnWrapper.style.cssText = "margin-bottom: 20px; margin-top: 10px; padding-left: 10px;";
 
-                const link = document.createElement('a');
+                let link = document.createElement('a');
                 link.href = url;
                 link.classList.add('btn-chat-link');
                 link.innerHTML = (label || "En savoir plus") + " &nbsp;→"; 
@@ -126,7 +126,7 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Ajouter un message Utilisateur
         function addUserMessage(text) {
-            const messageDiv = document.createElement('div');
+            let messageDiv = document.createElement('div');
             messageDiv.classList.add('message', 'user-message');
             messageDiv.textContent = text;
             messagesContainer.appendChild(messageDiv);
@@ -135,13 +135,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
         // Envoyer la question au PHP (AJAX)
         function sendMessage() {
-            const userQuestion = input.value.trim();
+            let userQuestion = input.value.trim();
             if (userQuestion === '') return;
 
             addUserMessage(userQuestion);
             input.value = '';
 
-            // Note : Chemin mis à jour vers le dossier script/
             fetch('script/chatbot_reponse.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
@@ -167,16 +166,16 @@ document.addEventListener("DOMContentLoaded", function () {
        5. ANIMATION COMPTEURS STATS
        --------------------------------------------------------- */
     
-    const statsSection = document.querySelector('.stats-section');
+    let statsSection = document.querySelector('.stats-section');
     if (statsSection) {
-        const counters = document.querySelectorAll('.counter');
-        const speed = 2000;
+        let counters = document.querySelectorAll('.counter');
+        let speed = 2000;
 
-        const animateCounters = () => {
+        let animateCounters = () => {
             counters.forEach(counter => {
-                const target = +counter.getAttribute('data-target');
-                const count = +counter.innerText;
-                const increment = target / speed;
+                let target = +counter.getAttribute('data-target');
+                let count = +counter.innerText;
+                let increment = target / speed;
 
                 if (count < target) {
                     counter.innerText = Math.ceil(count + increment);
@@ -187,7 +186,7 @@ document.addEventListener("DOMContentLoaded", function () {
             });
         };
 
-        const observer = new IntersectionObserver((entries, observer) => {
+        let observer = new IntersectionObserver((entries, observer) => {
             entries.forEach(entry => {
                 if (entry.isIntersecting) {
                     animateCounters();
@@ -204,7 +203,7 @@ document.addEventListener("DOMContentLoaded", function () {
        --------------------------------------------------------- */
     
     let konamiCode = [];
-    const konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
+    let konamiSequence = [38, 38, 40, 40, 37, 39, 37, 39, 66, 65];
     let isRainbowActive = false;
 
     $(document).on("keydown", function (e) {
@@ -231,8 +230,8 @@ document.addEventListener("DOMContentLoaded", function () {
        --------------------------------------------------------- */
 
        document.addEventListener("DOMContentLoaded", function() {
-    const cookieBanner = document.getElementById('cookie-banner');
-    const acceptBtn = document.getElementById('accept-cookies');
+    let cookieBanner = document.getElementById('cookie-banner');
+    let acceptBtn = document.getElementById('accept-cookies');
 
     // Vérifie si le cookie "cookies_accepted" existe déjà
     if (!localStorage.getItem('cookies_accepted')) {
@@ -254,8 +253,8 @@ document.addEventListener("DOMContentLoaded", function () {
 window.addEventListener('load', function() {
     // Performance monitoring
     if ('performance' in window && 'getEntriesByType' in performance) {
-        const navigation = performance.getEntriesByType('navigation')[0];
-        const loadTime = navigation.loadEventEnd - navigation.fetchStart;
+        let navigation = performance.getEntriesByType('navigation')[0];
+        let loadTime = navigation.loadEventEnd - navigation.fetchStart;
         
         // Log performance for monitoring (you can send to analytics)
         console.log('Page load time:', loadTime + 'ms');

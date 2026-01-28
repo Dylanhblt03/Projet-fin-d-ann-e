@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/includes/db.inc.php'; 
-require_once __DIR__ . '/includes/mail.config.php'; 
+require_once __DIR__ . '/includes/db.inc.php';
+require_once __DIR__ . '/includes/mail.config.php';
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: pages/contact.php");
@@ -23,7 +23,7 @@ $telephone = trim(htmlspecialchars($_POST['telephone']));
 $service = trim(htmlspecialchars($_POST['service']));
 $message = trim(htmlspecialchars($_POST['message']));
 
-// 2. Enregistrement BDD 
+
 $sql = "INSERT INTO contacts (nom, email, telephone, service, message, statut, date_creation, client_id) 
         VALUES (?, ?, ?, ?, ?, 'nouveau', NOW(), 0)";
 
@@ -35,17 +35,14 @@ if ($stmt = $conn->prepare($sql)) {
     }
     $stmt->close();
 }
-
-// 3. Envoi de l'email avec PHPMailer
 $email_success = false;
 if ($db_success) {
     try {
-        $mail = getMailer(); 
+        $mail = getMailer();
 
-        // Destinataire et Expéditeur
         $mail->setFrom('dylan.hblt03@gmail.com', 'Oleris Web');
-        $mail->addAddress('oleris@gmail.com'); 
-        $mail->addReplyTo($email, $nom);     
+        $mail->addAddress('oleris@gmail.com');
+        $mail->addReplyTo($email, $nom);
 
         // Contenu du mail
         $mail->isHTML(true);
@@ -61,15 +58,12 @@ if ($db_success) {
 
         $mail->send();
         $email_success = true;
-
     } catch (Exception $e) {
         $email_success = false;
     }
 }
 
-// 4. Réponse selon AJAX ou non
 if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQUESTED_WITH']) == 'xmlhttprequest') {
-    // Réponse AJAX
     if ($db_success) {
         if ($email_success) {
             echo json_encode(['success' => true, 'message' => 'Votre demande a bien été envoyée !']);
@@ -80,7 +74,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         echo json_encode(['success' => false, 'message' => 'Erreur technique lors de l\'enregistrement.']);
     }
 } else {
-    // Réponse normale (redirect)
     if ($db_success) {
         if ($email_success) {
             $_SESSION['flash_message'] = "Votre demande a bien été envoyée !";
