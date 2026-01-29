@@ -1,0 +1,1 @@
+insert into `utilisateurs` (`actif`, `date_creation`, `derniere_connexion`, `email`, `id`, `mot_de_passe`, `nom`, `permissions`, `photo_profil`, `prenom`, `role`, `telephone`) values (1, '2025-10-31 14:28:11', NULL, 'dylan.hblt03@gmail.com', 1, '$2y$10$E/gL5b.yL9.p2o3.i4.o5.u6.s7.e8.r9.t0.y1.u2.i3.o4.p5', 'Humblot', NULL, NULL, 'Dylan', 'admin', NULL);
