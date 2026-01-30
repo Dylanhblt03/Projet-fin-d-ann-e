@@ -69,6 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.success) {
                     alert("Merci pour votre demande ! Je vous recontacterai très prochainement.");
                     $("#contactForm")[0].reset();
+                    window.location.href = "contact.php";
                 } else {
                     alert("Erreur: " + response.message);
                 }

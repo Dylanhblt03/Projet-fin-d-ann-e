@@ -35,7 +35,7 @@ if (empty($_SESSION['csrf_token'])) {
                                 <p class="text-gold fw-bold fs-5">Nous prenons en compte votre demande et revenons vers vous dans les plus brefs délais.</p>
                             </div>
                             <div class="mt-5">
-                                <a href="index.php" class="btn btn-outline-gold">Retour à l'accueil</a>
+                                <a href="../index.php" class="btn btn-outline-gold">Retour à l'accueil</a>
                             </div>
                         </div>
                     <?php 
@@ -55,7 +55,7 @@ if (empty($_SESSION['csrf_token'])) {
                         <?php } ?>
 
                         <div class="contact-form mt-4">
-                            <form id="devisForm" action="../traitement_devis.php" method="POST">
+                            <form id="devisForm" action="traitement_devis.php" method="POST">
                                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                 <div style="display:none;"><input type="text" name="website_check"></div>
 

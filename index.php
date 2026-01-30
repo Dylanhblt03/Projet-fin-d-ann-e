@@ -27,7 +27,7 @@ include __DIR__ . '/includes/header.inc.php';
                             Architecture web sur-mesure, design immersif et photographie haute définition. Nous concevons des outils numériques performants qui propulsent votre image de marque.
                         </p>
                         <a href="#services" class="btn btn-gold btn-lg me-3">Découvrir</a>
-                        <a href="/contact" class="btn btn-outline-gold btn-lg">Me contacter</a>
+                        <a href="pages/contact.php" class="btn btn-outline-gold btn-lg">Me contacter</a>
                     </div>
                 </div>
                 <div class="col-lg-5 offset-lg-1" data-aos="fade-left">
@@ -60,7 +60,7 @@ include __DIR__ . '/includes/header.inc.php';
                         De plus, nous gérons vos projets de refonte, nous nous chargeons de la maintenance et de l'hébergement de vos sites et élaborons des stratégies SEO efficaces pour renforcer votre présence en ligne.
                     </p>
                     <div class="text-center">
-                        <a href="/service" class="btn btn-gold btn-lg">Voir tous nos services</a>
+                        <a href="pages/service.php" class="btn btn-gold btn-lg">Voir tous nos services</a>
                     </div>
                 </div>
 
@@ -117,15 +117,15 @@ include __DIR__ . '/includes/header.inc.php';
         ?>
             <div class="portfolio-grid" data-aos="zoom-in">
                 <?php
-                $styles_grille = ['spot-large', 'spot-small', 'spot-medium'];
+                $styles_grille = ['spot-large', 'spot-medium', 'spot-medium'];
                 
                 foreach ($portfolio_items as $index => $item) {
                     $classe_spot = $styles_grille[$index % 3];
                     $categorie_nom = $categories[$item['categorie']] ?? 'Projet';
                     
                     $image_src = !empty($item['image_url']) 
-                        ? (strpos($item['image_url'], '/') === 0 ? $item['image_url'] : "images/" . $item['image_url']) 
-                        : "images/default-portfolio.jpg";
+                        ? (strpos($item['image_url'], '/') === 0 ? $item['image_url'] : "/images/" . $item['image_url']) 
+                        : "/images/default-portfolio.jpg";
                 ?>
                     <div class="spot <?php echo $classe_spot; ?>">
                         <img src="<?php echo htmlspecialchars($image_src); ?>" alt="<?php echo htmlspecialchars($item['titre']); ?>">
@@ -141,7 +141,7 @@ include __DIR__ . '/includes/header.inc.php';
         <?php } ?>
 
         <div class="text-center mt-5" data-aos="fade-up">
-            <a href="/realisation" class="btn btn-gold btn-lg">Voir tous nos projets</a>
+            <a href="pages/realisation.php" class="btn btn-gold btn-lg">Voir tous nos projets</a>
         </div>
     </div>
 </section>
@@ -177,8 +177,8 @@ include __DIR__ . '/includes/header.inc.php';
         <div class="container text-center">
             <h3 class="mb-3">Prêt à passer à l'étape supérieure ?</h3>
             <p class="mb-4 text-secondary">Ne laissez pas votre présence en ligne au hasard. Profitez d'un accompagnement sur-mesure dès aujourd'hui. Réponse garantie en moins de 48 heures.</p>
-            <a href="/devis" class="btn btn-gold btn-lg">Demander un devis</a>
-            <a href="/realisation" class="btn btn-outline-gold btn-lg ms-3">Voir notre travail</a>
+            <a href="pages/devis.php" class="btn btn-gold btn-lg">Demander un devis</a>
+            <a href="pages/realisation.php" class="btn btn-outline-gold btn-lg ms-3">Voir notre travail</a>
         </div>
     </section>
 

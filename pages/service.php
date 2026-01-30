@@ -14,7 +14,7 @@ include '../includes/header.inc.php';
                 </div>
             </div>
             <div class="text-center mt-4">
-                <a href="/devis" class="btn btn-gold btn-lg">Demander un devis gratuit</a>
+                <a href="devis.php" class="btn btn-gold btn-lg">Demander un devis gratuit</a>
             </div>
         </div>
     </section>
@@ -37,7 +37,7 @@ include '../includes/header.inc.php';
                             </p>
                         <?php endif; ?>
 
-                        <a href="/devis?service=<?php echo urlencode($service['nom']); ?>" class="btn btn-gold btn-lg mt-3">Demander un devis</a>
+                        <a href="devis.php?service=<?php echo urlencode($service['nom']); ?>" class="btn btn-gold btn-lg mt-3">Demander un devis</a>
                     </div>
                     
                     <div class="col-md-6 mt-4 mt-md-0 text-center">

@@ -2,26 +2,36 @@
 // Empêcher l'accès direct au fichier pour plus de sécurité
 if (count(get_included_files()) <= 1) die("Accès direct interdit.");
 
+/* ==========================================================================
+    ANCIENNE CONNEXION (COMMENTÉE)
+   ==========================================================================
 $isLocal = in_array($_SERVER['REMOTE_ADDR'], ['127.0.0.1', '::1']);
 
 if ($isLocal) {
     $host = 'localhost'; $db = 'oleris'; $user = 'root'; $pass = '';
 } else {
-    // mettre vrais identifiants ici lors de la mise en ligne
     $host = 'mysql.ton-hebergeur.com'; $db = 'nom_de_ta_bdd'; $user = 'user'; $pass = 'pass';
 }
 
 $conn = new mysqli($host, $user, $pass, $db);
+========================================================================== */
+
+// NOUVELLE CONNEXION (HOMESTEAD / OLERIS_DB)
+$conn = new mysqli("192.168.56.56", "homestead", "secret", "oleris_db");
+
 if ($conn->connect_error) {
     die("Erreur BDD : " . $conn->connect_error);
 }
 $conn->set_charset("utf8mb4");
+
+$database = $conn; 
 
 /* ==========================================================================
    FONCTIONS SERVICES
    ========================================================================== */
 
 function getServices($conn) {
+    // Attention : Assure-toi que la table 'services' existe aussi !
     $sql = "SELECT * FROM services WHERE actif = 1 ORDER BY ordre_affichage";
     $result = $conn->query($sql);
     return $result ? $result->fetch_all(MYSQLI_ASSOC) : [];
@@ -73,3 +83,4 @@ function getClientsSatisfaitsCount($conn) {
     $row = $result->fetch_assoc();
     return $row['total'] ?? 0;
 }
+?>

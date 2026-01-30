@@ -1,3 +1,9 @@
+<?php
+// Détecte automatiquement le préfixe du chemin selon le répertoire courant
+$current_dir = dirname($_SERVER['PHP_SELF']);
+$is_in_pages_folder = (basename($current_dir) === 'pages');
+$path_prefix = $is_in_pages_folder ? '' : 'pages/';
+?>
 <footer class="site-footer">
     <div class="container">
         <div class="row footer-content justify-content-between">
@@ -16,9 +22,9 @@
                 <h4 class="footer-title">Navigation</h4>
                 <ul class="footer-links list-unstyled d-inline-block text-start">
                     <li><a href="/"><i class="fas fa-chevron-right me-2"></i>Accueil</a></li>
-                    <li><a href="/service"><i class="fas fa-chevron-right me-2"></i>Nos Services</a></li>
-                    <li><a href="/realisation"><i class="fas fa-chevron-right me-2"></i>Portfolio</a></li>
-                    <li><a href="/contact"><i class="fas fa-chevron-right me-2"></i>Contact</a></li>
+                    <li><a href="<?php echo $path_prefix; ?>service.php"><i class="fas fa-chevron-right me-2"></i>Nos Services</a></li>
+                    <li><a href="<?php echo $path_prefix; ?>realisation.php"><i class="fas fa-chevron-right me-2"></i>Réalisations</a></li>
+                    <li><a href="<?php echo $path_prefix; ?>contact.php"><i class="fas fa-chevron-right me-2"></i>Contact</a></li>
                 </ul>
             </div>
 
@@ -62,9 +68,9 @@
                     <p class="mb-0">&copy; <?php echo date('Y'); ?> **Oléris**. Tous droits réservés.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="/mentions-legales" class="text-white-50 text-decoration-none small">Mentions Légales</a>
+                    <a href="<?php echo $path_prefix; ?>mentions-legales.php" class="text-white-50 text-decoration-none small">Mentions Légales</a>
                     <span class="text-white-50 mx-2">|</span>
-                    <a href="/politique-confidentialite" class="text-white-50 text-decoration-none small">Confidentialité</a>
+                    <a href="<?php echo $path_prefix; ?>politique-confidentialite.php" class="text-white-50 text-decoration-none small">Confidentialité</a>
                 </div>
             </div>
         </div>
@@ -78,7 +84,7 @@
         </div>
         <div class="cookie-buttons">
             <button id="accept-cookies" class="btn btn-gold btn-sm px-4 me-2">Accepter</button>
-            <a href="/politique-confidentialite" class="text-white-50 small text-decoration-none">En savoir plus</a>
+            <a href="<?php echo $path_prefix; ?>politique-confidentialite.php" class="text-white-50 small text-decoration-none">En savoir plus</a>
         </div>
     </div>
 </div>

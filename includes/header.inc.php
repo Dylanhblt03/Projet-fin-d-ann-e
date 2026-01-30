@@ -3,6 +3,12 @@ if (session_status() == PHP_SESSION_NONE) {
     session_start();
 }
 
+// --- DÉTECTION AUTOMATIQUE DU RÉPERTOIRE COURANT ---
+// Détermine si on est dans le dossier pages/ ou à la racine
+$current_dir = dirname($_SERVER['PHP_SELF']);
+$is_in_pages_folder = (basename($current_dir) === 'pages');
+$path_prefix = $is_in_pages_folder ? '' : 'pages/';
+
 // --- LOGIQUE SEO DYNAMIQUE ---
 // On récupère le nom du fichier actuel (ex: index.php)
 $current_page = basename($_SERVER['PHP_SELF']);
@@ -146,16 +152,16 @@ switch($current_page) {
                         <a class="nav-link <?php echo ($current_page == 'index.php') ? 'active' : ''; ?>" href="/">Accueil</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'service.php') ? 'active' : ''; ?>" href="/service">Services</a>
+                        <a class="nav-link <?php echo ($current_page == 'service.php') ? 'active' : ''; ?>" href="<?php echo $path_prefix; ?>service.php">Services</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'realisation.php') ? 'active' : ''; ?>" href="/realisation">Réalisations</a>
+                        <a class="nav-link <?php echo ($current_page == 'realisation.php') ? 'active' : ''; ?>" href="<?php echo $path_prefix; ?>realisation.php">Réalisations</a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link <?php echo ($current_page == 'contact.php') ? 'active' : ''; ?>" href="/contact">Contact</a>
+                        <a class="nav-link <?php echo ($current_page == 'contact.php') ? 'active' : ''; ?>" href="<?php echo $path_prefix; ?>contact.php">Contact</a>
                     </li>
                     <li class="nav-item">
-                        <a href="/devis" class="btn btn-gold ms-lg-3">Demander un Devis</a>
+                        <a href="<?php echo $path_prefix; ?>devis.php" class="btn btn-gold ms-lg-3">Demander un Devis</a>
                     </li>
                 </ul>
             </div>

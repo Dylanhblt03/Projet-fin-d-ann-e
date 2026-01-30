@@ -32,12 +32,16 @@ include '../includes/header.inc.php';
                             'app_mobile' => 'Application Mobile'
                         ];
                         $categorie_fr = $categories[$item['categorie']] ?? 'Projet';
-                        $thumb_url = "images/" . $item['image_url']; 
+                        $thumb_url = strpos($item['image_url'], '/') === 0 
+                            ? $item['image_url'] 
+                            : "/images/" . $item['image_url'];
                         
                         $full_url = $thumb_url;
                         foreach ($all_items as $sub_item) {
                             if ($sub_item['visible'] == 0 && $sub_item['titre'] === $item['titre']) {
-                                $full_url = "images/" . $sub_item['image_url'];
+                                $full_url = strpos($sub_item['image_url'], '/') === 0 
+                                    ? $sub_item['image_url']
+                                    : "/images/" . $sub_item['image_url'];
                                 break;
                             }
                         }
