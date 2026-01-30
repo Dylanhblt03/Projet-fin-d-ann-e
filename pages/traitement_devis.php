@@ -4,14 +4,14 @@ require_once __DIR__ . '/includes/db.inc.php';
 require_once __DIR__ . '/includes/mail.config.php';
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    header("Location: pages/devis.php");
+    header("Location: /devis");
     exit();
 }
 
 if (!isset($_POST['csrf_token']) || $_POST['csrf_token'] !== $_SESSION['csrf_token']) {
     $_SESSION['flash_message'] = "Session expirée.";
     $_SESSION['flash_type'] = 'danger';
-    header("Location: pages/devis.php");
+    header("Location: /devis");
     exit();
 }
 
@@ -85,6 +85,6 @@ if ($db_success) {
     $_SESSION['flash_type'] = 'danger';
 }
 
-header("Location: pages/devis.php#devis");
+header("Location: /devis#devis");
 exit();
 ?>

@@ -1,21 +1,16 @@
-# Activer le mod_rewrite
-<IfModule mod_rewrite.c>
-    RewriteEngine On
-    RewriteBase /
-    
-    # Ne pas réécrire les fichiers réels
-    RewriteCond %{REQUEST_FILENAME} -f
-    RewriteRule ^ - [L]
-    
-    # Ne pas réécrire les dossiers réels
-    RewriteCond %{REQUEST_FILENAME} -d
-    RewriteRule ^ - [L]
-    
-    # Masquer les .php
-    RewriteCond %{THE_REQUEST} /([^.]+)\.php [NC]
-    RewriteRule ^ /%1 [NC,L,R=301]
-    
-    # Réécrire les URLs sans extension vers les .php
-    RewriteCond %{REQUEST_FILENAME}.php -f
-    RewriteRule ^(.*?)/?$ $1.php [L]
-</IfModule>
+RewriteEngine On
+Options -Multiviews
+
+# 1. Page d'accueil
+RewriteRule ^$ index.php [L]
+
+# 2. Ne pas toucher aux vrais fichiers
+RewriteCond %{REQUEST_FILENAME} -f
+RewriteRule ^ - [L]
+
+# 3. /monUrl -> /pages/monUrl.php (SI le fichier existe)
+RewriteCond %{DOCUMENT_ROOT}/pages/$1.php -f
+RewriteRule ^([^/]+)/?$ pages/$1.php [L]
+
+# 4. Tout le reste -> 404
+RewriteRule ^ pages/404.php [L]

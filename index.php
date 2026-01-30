@@ -60,7 +60,7 @@ include __DIR__ . '/includes/header.inc.php';
                         De plus, nous gérons vos projets de refonte, nous nous chargeons de la maintenance et de l'hébergement de vos sites et élaborons des stratégies SEO efficaces pour renforcer votre présence en ligne.
                     </p>
                     <div class="text-center">
-                        <a href="pages/service.php" class="btn btn-gold btn-lg">Voir tous nos services</a>
+                        <a href="/services" class="btn btn-gold btn-lg">Voir tous nos services</a>
                     </div>
                 </div>
 

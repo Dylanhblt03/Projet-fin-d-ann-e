@@ -1,0 +1,12 @@
+services:
+  php-apache:
+    build: .
+    container_name: oleris-php-apache
+    ports:
+      - "8000:80"
+    volumes:
+      - .:/var/www/html
+      - ./Dockerfile:/Dockerfile
+    environment:
+      PHP_IDE_CONFIG: serverName=localhost
+

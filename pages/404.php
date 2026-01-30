@@ -26,10 +26,10 @@ include '../includes/header.inc.php';
                     </div>
 
                     <div class="error-actions">
-                        <a href="../index.php" class="btn btn-gold btn-lg">
+                        <a href="/" class="btn btn-gold btn-lg">
                             <i class="fas fa-home"></i> Retour à l'accueil
                         </a>
-                        <a href="contact.php" class="btn btn-outline-gold btn-lg">
+                        <a href="/contact" class="btn btn-outline-gold btn-lg">
                             <i class="fas fa-envelope"></i> Nous contacter
                         </a>
                     </div>
@@ -39,7 +39,7 @@ include '../includes/header.inc.php';
                     <div class="error-explore-section">
                         <h3 class="error-explore-title">Explorer notre site</h3>
                         <div class="error-cards-grid">
-                            <a href="service.php" class="error-card">
+                            <a href="/nos-services" class="error-card">
                                 <div class="error-card-icon">
                                     <i class="fas fa-cogs"></i>
                                 </div>
@@ -47,7 +47,7 @@ include '../includes/header.inc.php';
                                 <p class="error-card-text">Découvrez nos expertises en développement et design</p>
                             </a>
 
-                            <a href="realisation.php" class="error-card">
+                            <a href="/realisations" class="error-card">
                                 <div class="error-card-icon">
                                     <i class="fas fa-images"></i>
                                 </div>
@@ -55,7 +55,7 @@ include '../includes/header.inc.php';
                                 <p class="error-card-text">Consultez nos derniers projets réalisés</p>
                             </a>
 
-                            <a href="devis.php" class="error-card">
+                            <a href="/devis" class="error-card">
                                 <div class="error-card-icon">
                                     <i class="fas fa-file-invoice-dollar"></i>
                                 </div>

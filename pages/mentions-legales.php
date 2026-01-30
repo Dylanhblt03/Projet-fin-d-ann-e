@@ -46,7 +46,7 @@ include '../includes/header.inc.php';
                         <div class="legal-block">
                             <h2>5. Cookies</h2>
                             <p>Ce site utilise des cookies pour améliorer l'expérience utilisateur. En naviguant sur ce site, vous acceptez l'utilisation de ces cookies.</p>
-                            <p>Pour plus d'informations, consultez notre <a href="politique-confidentialite.php">politique de confidentialité</a>.</p>
+                            <p>Pour plus d'informations, consultez notre <a href="/politique-confidentialite">politique de confidentialité</a>.</p>
                         </div>
 
                         <div class="legal-block">

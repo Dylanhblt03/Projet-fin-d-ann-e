@@ -35,7 +35,7 @@ if (empty($_SESSION['csrf_token'])) {
                                 <p class="text-gold fw-bold fs-5">Nous prenons en compte votre demande et revenons vers vous dans les plus brefs délais.</p>
                             </div>
                             <div class="mt-5">
-                                <a href="../index.php" class="btn btn-outline-gold">Retour à l'accueil</a>
+                                <a href="/" class="btn btn-outline-gold">Retour à l'accueil</a>
                             </div>
                         </div>
                     <?php 

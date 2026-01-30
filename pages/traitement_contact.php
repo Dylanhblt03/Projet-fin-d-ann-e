@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/includes/db.inc.php';
-require_once __DIR__ . '/includes/mail.config.php';
+require_once __DIR__ . '/../includes/db.inc.php';
+require_once __DIR__ . '/../includes/mail.config.php';
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: pages/contact.php");
@@ -86,6 +86,6 @@ if (isset($_SERVER['HTTP_X_REQUESTED_WITH']) && strtolower($_SERVER['HTTP_X_REQU
         $_SESSION['flash_message'] = "Erreur technique lors de l'enregistrement en base de données.";
         $_SESSION['flash_type'] = 'danger';
     }
-    header("Location: pages/contact.php#contact");
+    header("Location: /contact#contact");
     exit();
 }

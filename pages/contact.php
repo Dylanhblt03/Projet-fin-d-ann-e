@@ -34,7 +34,7 @@ if (isset($_GET['source']) && $_GET['source'] === 'estimation') {
                             <p class="text-gold fw-bold fs-5">Nous vous répondrons sous 48H.</p>
                         </div>
                         <div class="mt-5">
-                            <a href="../index.php" class="btn btn-outline-gold">Retour à l'accueil</a>
+                            <a href="/" class="btn btn-outline-gold">Retour à l'accueil</a>
                         </div>
                     </div>
                 <?php
@@ -58,7 +58,7 @@ if (isset($_GET['source']) && $_GET['source'] === 'estimation') {
                     } ?>
 
                     <div class="contact-form mt-4">
-                        <form id="contactForm" action="traitement_contact.php" method="POST">
+                        <form id="contactForm" action="/traitement_contact" method="POST">
                             <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                             <div style="display:none;"><input type="text" name="website_check"></div>
 
