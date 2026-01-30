@@ -8,7 +8,35 @@
 --grey-dark: #1a1a1a;
 --grey-light: #f5f5f5;
 }
+/* --- PERSONNALISATION DE LA BARRE DE SCROLL --- */
 
+/* 1. Largeur de la barre */
+::-webkit-scrollbar {
+    width: 12px;
+}
+
+/* 2. Fond de la barre (le rail) */
+::-webkit-scrollbar-track {
+    background: var(--black-color);
+}
+
+/* 3. La partie mobile (le curseur) */
+::-webkit-scrollbar-thumb {
+    background: linear-gradient(180deg, var(--gold-dark), var(--gold-color));
+    border-radius: 10px;
+    border: 3px solid var(--black-color); /* Crée un espace autour du curseur */
+}
+
+/* 4. Au survol du curseur */
+::-webkit-scrollbar-thumb:hover {
+    background: var(--gold-light);
+}
+
+/* Pour Firefox (plus limité en style) */
+* {
+    scrollbar-width: thin;
+    scrollbar-color: var(--gold-color) var(--black-color);
+}
 * {
 margin: 0;
 padding: 0;
