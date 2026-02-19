@@ -1,10 +1,10 @@
 <?php
-include '../includes/db.inc.php';
+include __DIR__ . '/../includes/db.inc.php';
 $all_items = getPortfolioFull($conn);
 $portfolio_items = array_filter($all_items, function($item) {
     return $item['visible'] == 1;
 });
-include '../includes/header.inc.php';
+include __DIR__ . '/../includes/header.inc.php';
 ?>
 
 <main class="main-content-wrapper" style="padding-top: 60px;">
@@ -117,4 +117,4 @@ document.addEventListener('DOMContentLoaded', function () {
 </script>
 
 
-<?php include '../includes/footer.inc.php'; ?>
+<?php include __DIR__ . '/../includes/footer.inc.php'; ?>

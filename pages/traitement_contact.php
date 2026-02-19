@@ -4,7 +4,7 @@ require_once __DIR__ . '/../includes/db.inc.php';
 require_once __DIR__ . '/../includes/mail.config.php';
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
-    header("Location: pages/contact.php");
+    header("Location: /contact");
     exit();
 }
 

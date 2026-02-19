@@ -1,6 +1,6 @@
 <?php 
 http_response_code(404);
-include '../includes/header.inc.php';
+include __DIR__ . '/../includes/header.inc.php';
 ?>
 
 <main class="main-content-wrapper">
@@ -72,4 +72,4 @@ include '../includes/header.inc.php';
 
 </main>
 
-<?php include '../includes/footer.inc.php'; ?>
+<?php include __DIR__ . '/../includes/footer.inc.php'; ?>

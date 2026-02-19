@@ -1,7 +1,7 @@
 <?php
 session_start();
-require_once __DIR__ . '/includes/db.inc.php';
-require_once __DIR__ . '/includes/mail.config.php';
+require_once __DIR__ . '/../includes/db.inc.php';
+require_once __DIR__ . '/../includes/mail.config.php';
 
 if ($_SERVER["REQUEST_METHOD"] != "POST") {
     header("Location: /devis");

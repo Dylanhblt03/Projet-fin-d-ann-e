@@ -1,7 +1,7 @@
 <?php
-include '../includes/db.inc.php';
+include __DIR__ . '/../includes/db.inc.php';
 $services = getServices($conn);
-include '../includes/header.inc.php';
+include __DIR__ . '/../includes/header.inc.php';
 ?>
 
 <main>
@@ -54,5 +54,5 @@ include '../includes/header.inc.php';
 </main>
 
 <?php
-include '../includes/footer.inc.php';
+include __DIR__ . '/../includes/footer.inc.php';
 ?>

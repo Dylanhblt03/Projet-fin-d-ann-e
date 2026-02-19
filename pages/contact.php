@@ -1,8 +1,8 @@
 <?php
 session_start();
-include '../includes/db.inc.php';
+include __DIR__ . '/../includes/db.inc.php';
 $services = getServices($conn);
-include '../includes/header.inc.php';
+include __DIR__ . '/../includes/header.inc.php';
 
 if (empty($_SESSION['csrf_token'])) {
     $_SESSION['csrf_token'] = bin2hex(random_bytes(32));
@@ -111,4 +111,4 @@ if (isset($_GET['source']) && $_GET['source'] === 'estimation') {
     </div>
 </section>
 
-<?php include '../includes/footer.inc.php'; ?>
+<?php include __DIR__ . '/../includes/footer.inc.php'; ?>

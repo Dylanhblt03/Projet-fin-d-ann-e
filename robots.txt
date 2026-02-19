@@ -9,8 +9,8 @@ Disallow: /includes/
 Disallow: /bdd/
 Disallow: /script/
 Disallow: /css/
-Disallow: /images/  # Optionnel, selon si tu veux que les images soient indexées via les pages
-Disallow: /uploads/  # Protège les fichiers uploadés
+Disallow: /images/  
+Disallow: /uploads/ 
 
 # Crawl-delay pour être poli avec les moteurs de recherche
 Crawl-delay: 1

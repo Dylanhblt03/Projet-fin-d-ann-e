@@ -21,15 +21,15 @@ $og_image = $base_url . '/images/oleris.jpg';
 
 // Personnalisation selon la page
 switch($current_page) {
-    case 'service.php':
+    case 'nos-services.php':
         $meta_title = "Nos Services Digitaux | $site_name";
         $meta_desc = "Découvrez nos expertises : développement web, design UX/UI, SEO et maintenance applicative pour votre business.";
-        $canonical_url = $base_url . '/service';
+        $canonical_url = $base_url . '/nos-services';
         break;
-    case 'realisation.php':
+    case 'realisations.php':
         $meta_title = "Nos Réalisations & Projets | $site_name";
         $meta_desc = "Explorez notre portfolio : sites vitrines, e-commerce et photographie haute définition pour nos clients.";
-        $canonical_url = $base_url . '/realisation';
+        $canonical_url = $base_url . '/realisations';
         break;
     case 'contact.php':
         $meta_title = "Contactez l'Agence | $site_name";

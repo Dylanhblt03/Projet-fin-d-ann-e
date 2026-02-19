@@ -1,8 +1,8 @@
 <?php
 session_start();
-include '../includes/db.inc.php';
+include __DIR__ . '/../includes/db.inc.php';
 $services = getServices($conn);
-include '../includes/header.inc.php';
+include __DIR__ . '/../includes/header.inc.php';
 
 $isSuccess = (isset($_SESSION['flash_type']) && $_SESSION['flash_type'] === 'success');
 
@@ -55,7 +55,7 @@ if (empty($_SESSION['csrf_token'])) {
                         <?php } ?>
 
                         <div class="contact-form mt-4">
-                            <form id="devisForm" action="traitement_devis.php" method="POST">
+                            <form id="devisForm" action="/traitement_devis" method="POST">
                                 <input type="hidden" name="csrf_token" value="<?php echo $_SESSION['csrf_token']; ?>">
                                 <div style="display:none;"><input type="text" name="website_check"></div>
 
@@ -121,4 +121,4 @@ if (empty($_SESSION['csrf_token'])) {
     </section>
 
 
-<?php include '../includes/footer.inc.php'; ?>
+<?php include __DIR__ . '/../includes/footer.inc.php'; ?>

@@ -67,9 +67,9 @@ $is_in_pages_folder = (basename($current_dir) === 'pages');
                     <p class="mb-0">&copy; <?php echo date('Y'); ?> **Oléris**. Tous droits réservés.</p>
                 </div>
                 <div class="col-md-6 text-center text-md-end">
-                    <a href="mentions-legales" class="text-white-50 text-decoration-none small">Mentions Légales</a>
+                    <a href="/mentions-legales" class="text-white-50 text-decoration-none small">Mentions Légales</a>
                     <span class="text-white-50 mx-2">|</span>
-                    <a href="politique-confidentialite" class="text-white-50 text-decoration-none small">Confidentialité</a>
+                    <a href="/politique-confidentialite" class="text-white-50 text-decoration-none small">Confidentialité</a>
                 </div>
             </div>
         </div>
@@ -83,7 +83,7 @@ $is_in_pages_folder = (basename($current_dir) === 'pages');
         </div>
         <div class="cookie-buttons">
             <button id="accept-cookies" class="btn btn-gold btn-sm px-4 me-2">Accepter</button>
-            <a href="politique-confidentialite" class="text-white-50 small text-decoration-none">En savoir plus</a>
+            <a href="/politique-confidentialite" class="text-white-50 small text-decoration-none">En savoir plus</a>
         </div>
     </div>
 </div>

@@ -61,7 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
         e.preventDefault();
 
         $.ajax({
-            url: "traitement_contact.php", 
+            url: "/traitement_contact", 
             type: "POST",
             data: $(this).serialize(),
             dataType: "json",
@@ -69,7 +69,7 @@ document.addEventListener("DOMContentLoaded", function () {
                 if (response.success) {
                     alert("Merci pour votre demande ! Je vous recontacterai très prochainement.");
                     $("#contactForm")[0].reset();
-                    window.location.href = "contact.php";
+                    window.location.href = "/contact";
                 } else {
                     alert("Erreur: " + response.message);
                 }
@@ -142,7 +142,7 @@ document.addEventListener("DOMContentLoaded", function () {
             addUserMessage(userQuestion);
             input.value = '';
 
-            fetch('script/chatbot_reponse.php', {
+            fetch('/script/chatbot_reponse.php', {
                 method: 'POST',
                 headers: { 'Content-Type': 'application/x-www-form-urlencoded' },
                 body: `question=${encodeURIComponent(userQuestion)}`

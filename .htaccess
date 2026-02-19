@@ -1,16 +1,29 @@
-RewriteEngine On
-Options -Multiviews
+<IfModule mod_rewrite.c>
+    RewriteEngine On
+    RewriteBase /
+    
+    # Désactiver MultiViews
+    Options -MultiViews
+    
+    # Ne pas réécrire les fichiers et répertoires existants
+    RewriteCond %{REQUEST_FILENAME} !-f
+    RewriteCond %{REQUEST_FILENAME} !-d
+    RewriteCond %{REQUEST_FILENAME} !-l
+    
+    # Rerouter TOUT vers index.php avec le chemin original comme paramètre
+    RewriteRule ^(.*)$ index.php?_route=$1 [QSA,L]
+</IfModule>
 
-# 1. Page d'accueil
-RewriteRule ^$ index.php [L]
+# Compression et cache
+<IfModule mod_deflate.c>
+    AddOutputFilterByType DEFLATE text/html text/plain text/css text/javascript application/javascript application/json
+</IfModule>
 
-# 2. Ne pas toucher aux vrais fichiers
-RewriteCond %{REQUEST_FILENAME} -f
-RewriteRule ^ - [L]
+<IfModule mod_headers.c>
+    <FilesMatch "\.(jpg|jpeg|png|gif|ico|css|js|svg|webp)$">
+        Header set Cache-Control "max-age=31536000, public"
+    </FilesMatch>
+</IfModule>
 
-# 3. /monUrl -> /pages/monUrl.php (SI le fichier existe)
-RewriteCond %{DOCUMENT_ROOT}/pages/$1.php -f
-RewriteRule ^([^/]+)/?$ pages/$1.php [L]
-
-# 4. Tout le reste -> 404
-RewriteRule ^ pages/404.php [L]
+# Support des anciennes URLs pour compatibilité
+ErrorDocument 404 /index.php

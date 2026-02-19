@@ -1281,3 +1281,59 @@ body.rainbow-active img {
     animation: none !important;
     filter: none !important;
 }
+
+/* --- BANNEAU COOKIES --- */
+.cookie-banner {
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 9999;
+    background: rgba(0, 0, 0, 0.95);
+    color: white;
+    padding: 30px;
+    border-radius: 10px;
+    max-width: 600px;
+    width: 90%;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.4s ease, visibility 0.4s ease;
+    border: 1px solid var(--gold-color);
+}
+
+.cookie-banner.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.cookie-banner .cookie-text {
+    margin-bottom: 20px;
+}
+
+.cookie-banner .cookie-buttons {
+    display: flex;
+    gap: 15px;
+    align-items: center;
+}
+
+.cookie-banner .btn-gold {
+    white-space: nowrap;
+    padding: 8px 20px;
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .cookie-banner {
+        max-width: 90%;
+        padding: 20px;
+    }
+    
+    .cookie-banner .cookie-buttons {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .cookie-banner .btn-gold {
+        width: 100%;
+    }
+}

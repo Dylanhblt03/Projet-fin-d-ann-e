@@ -1,19 +1,11 @@
 <?php
-// Système de routage - charge la bonne page selon l'URL
-include __DIR__ . '/config.php';
+include __DIR__ . '/../includes/db.inc.php';
+$services = getServicesRand($conn);
+$portfolio_items = getPortfolioSelection($conn);
+$projets_realises = getProjetsCount($conn);
+$clients_satisfaits = getClientsSatisfaitsCount($conn);
 
-// Charger la page appropriée
-$page_file = $page_info['file'] ?? 'pages/404.php';
-
-// Vérifier si c'est la page d'accueil (index.php)
-if ($page_file === 'index.php') {
-    // Afficher la page d'accueil
-    include __DIR__ . '/includes/db.inc.php';
-    $services = getServicesRand($conn);
-    $portfolio_items = getPortfolioSelection($conn);
-    $projets_realises = getProjetsCount($conn);
-    $clients_satisfaits = getClientsSatisfaitsCount($conn);
-    include __DIR__ . '/includes/header.inc.php';
+include __DIR__ . '/../includes/header.inc.php';
 ?>
 
 <main class="main-content-wrapper">
@@ -193,13 +185,5 @@ if ($page_file === 'index.php') {
 </main>
 
 <?php
-    include __DIR__ . '/includes/footer.inc.php';
-} else {
-    // Charger une autre page
-    if (file_exists(__DIR__ . '/' . $page_file)) {
-        include __DIR__ . '/' . $page_file;
-    } else {
-        include __DIR__ . '/pages/404.php';
-    }
-}
+include __DIR__ . '/../includes/footer.inc.php';
 ?>
